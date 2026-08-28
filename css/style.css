@@ -35,9 +35,17 @@ a{color:inherit;text-decoration:none}
 
 /* page 1 must not clip the falcon when it flies out */
 .page1{z-index:2;overflow:visible;
-  /* First-paint fallback: the media path is selected asynchronously. Keep the
-     finished plate visible underneath it so page two cannot flash through. */
-  background:#120206 url("../assets/plate.jpg") center 70% / cover no-repeat}
+  /* First-paint fallback, and it must NOT be the finished plate.
+     The media path is chosen asynchronously, so something has to hold the frame
+     until the stage exists - but plate.jpg is the painting with the falcon in
+     it, and this background is behind everything. It therefore showed a falcon
+     perched on the sofa from the very first paint until the stage's own image
+     had downloaded and covered it: one frame on a desktop, seconds of it on a
+     phone, and then the entrance clip flew a second bird in over the top.
+     The room with no falcon instead - the same image the stage lies on, so the
+     handover is invisible - and it follows --art-pos so the crop does not jump
+     when the stage takes over on a phone. */
+  background:#120206 url("../assets/hero-first.webp") var(--art-pos, center 70%) / cover no-repeat}
 /* Hidden until the probe picks the vector path. It used to render on load and
    only get hidden once the async asset check resolved, which flashed the
    placeholder painting behind the real one for a frame or two. */
