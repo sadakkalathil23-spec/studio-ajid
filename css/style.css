@@ -600,9 +600,11 @@ a{color:inherit;text-decoration:none}
 .reel__img img{position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;display:block;
   -webkit-user-drag:none;pointer-events:none}
+/* White, not the page ink. The cards carry photographs now, and the navy the
+   labels inherited from the page was near-invisible on three of the four. */
 .reel__label{position:absolute;inset-inline-start:5%;bottom:5%;
   font-weight:300;letter-spacing:.03em;
-  font-size:clamp(13px,1.15vw,22px);color:var(--ink-page)}
+  font-size:clamp(13px,1.15vw,22px);color:#fff}
 
 @media (prefers-reduced-motion:reduce){
   .reel__in{-webkit-clip-path:none;clip-path:none}
