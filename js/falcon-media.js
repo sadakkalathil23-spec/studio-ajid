@@ -71,6 +71,9 @@
     var v = el('video');
     v.muted = true; v.playsInline = true; v.preload = 'auto';
     v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+    /* Legacy iOS Safari used the prefixed spelling. Keeping both is harmless
+       in current browsers and prevents fullscreen takeover on older iPads. */
+    v.setAttribute('webkit-playsinline', '');
     sources.forEach(function (s) {
       var so = document.createElement('source');
       so.src = s;
@@ -210,8 +213,24 @@
     this.idle.style.opacity = 1;
     if (this.enter) this.enter.style.opacity = 0;
     if (this.canvas) this.canvas.style.opacity = 0;
-    var p = this.idle.play();
-    if (p && p.catch) p.catch(function () {});
+    var self = this;
+    function playIdle() {
+      if (self.state !== 'IDLE') return;
+      var p = self.idle.play();
+      if (p && p.catch) {
+        p.catch(function () {
+          /* Safari may evaluate visibility before the opacity change paints.
+             Retry once after that paint; failure still degrades to the loaded
+             first frame without exposing controls or a blank layer. */
+          setTimeout(function () {
+            if (self.state !== 'IDLE' || !self.idle.paused) return;
+            var retry = self.idle.play();
+            if (retry && retry.catch) retry.catch(function () {});
+          }, 220);
+        });
+      }
+    }
+    requestAnimationFrame(playIdle);
   };
 
   /* p runs 0 (perched) -> 1 (gone), driven by scroll in main.js */
