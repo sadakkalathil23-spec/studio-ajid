@@ -53,7 +53,11 @@
   function el(tag) {
     var e = document.createElement(tag);
     e.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;' +
-                      'object-fit:cover;object-position:' + A.anchor + ';' +
+                      /* through a variable so a breakpoint can move the crop:
+                         on a phone the frame is far taller than 16:9 and the
+                         sides are cut hard, which took most of the falcon with
+                         them. See --art-pos in the stylesheet. */
+                      'object-fit:cover;object-position:var(--art-pos,' + A.anchor + ');' +
                       'transition:opacity .18s linear';
     return e;
   }

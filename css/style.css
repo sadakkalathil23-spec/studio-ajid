@@ -687,16 +687,27 @@ a{color:inherit;text-decoration:none}
      The spans stay in the markup - they carry the Arabic through lang.js - and
    the entrance moves onto the paragraphs, so the cascade is badge, first
    paragraph, second paragraph on the same tenth-of-a-second beat. */
-.studio__line{display:inline}
-.studio__mark,.studio__copy p{
+/* One block per REAL line - studio-lines.js measures where the browser breaks
+   the copy and wraps each of those lines in its own span, numbered in --i. So
+   the lines fill the measure (the browser chose the breaks) and still enter one
+   at a time (they are elements), which hard-coded spans could only do one of.
+   The badge leads, then each line a tenth of a second behind the one above it,
+   the same beat and easing as the hero navigation and the Studio address. */
+.studio__line{display:block;
+  /* Flush both edges. Each line is its own block, so it is also its own last
+     line, and plain justify never stretches a last line - text-align-last is
+     what pulls the right edge out to the inset. The closing line of each
+     paragraph is exempt: it is meant to be short. */
+  text-align-last:justify}
+.studio__line--last{text-align-last:auto}
+.studio__mark,.studio__line{
   transform:translate3d(calc(-100% - var(--gutter)),0,0);
   transition:transform 1s var(--in-ease);
   will-change:transform}
 .studio__mark{transition-delay:0s}
-.studio__copy p:nth-of-type(1){transition-delay:.1s}
-.studio__copy p:nth-of-type(2){transition-delay:.2s}
+.studio__line{transition-delay:calc((var(--i,0) + 1) * .1s)}
 .studio.is-inview .studio__mark,
-.studio.is-inview .studio__copy p{transform:translate3d(0,0,0)}
+.studio.is-inview .studio__line{transform:translate3d(0,0,0)}
 
 @media (max-width:860px){
   /* the frame is no longer 16:9, so hold the type at a readable size rather
@@ -711,6 +722,13 @@ a{color:inherit;text-decoration:none}
        ragged edge reads better than an even one. start, not left, so Arabic
        still sets from the right. */
     text-align:start}
+  /* text-align-last is what actually sets each line now that every line is its
+     own block, so switching text-align alone left them still stretched. */
+  .studio__line{text-align-last:auto;
+    /* Half the beat. The copy breaks into about sixteen lines on a phone
+       against five on a desktop, and at a tenth each the last line arrived
+       1.6s after the first - the reader is left waiting on the paragraph. */
+    transition-delay:calc((var(--i,0) + 1) * .05s)}
   .studio__copy p:first-child{text-indent:0}
 
   /* THE REEL. A quarter of the frame is a quarter of 1920 on a desktop and a
@@ -739,6 +757,18 @@ a{color:inherit;text-decoration:none}
 @media (max-width:560px){
   /* one card and a clear slice of the next */
   .reel__card{width:72%}
+
+  /* THE ARTWORK, 100px to the left - phones only.
+     The painting is 16:9 and a phone held upright is nothing like it, so cover
+     crops the sides hard and the falcon, which perches at the right, was mostly
+     outside the frame. Sliding the crop window right by 100px brings him back
+     without changing the composition on any wider screen.
+       Done on object-position rather than by transforming the stage: the layers
+     cover the frame exactly, so translating them would drag bare background in
+     at the right edge. The variable is read by every layer at once - plate,
+     both videos and the exit canvas - so the whole artwork and all of its
+     animation move together and stay registered to each other. */
+  :root{--art-pos:calc(50% - 100px) 70%}
 }
 
 /* debug readout - add ?debug to the URL to show it */
@@ -750,7 +780,7 @@ a{color:inherit;text-decoration:none}
 
 /* ?ready, and print: the finished hero with no entrance to sit through */
 .settled .mark-slide,.settled .hero-nav__i a,.settled .hero-lang a,
-.settled .studio__mark,.settled .studio__copy p,
+.settled .studio__mark,.settled .studio__line,
 .settled .info__title,.settled .info__line{
   transition:none!important;transform:translateX(0)!important}
 .settled .endmark .endmark__line{transition:none!important;transform:scaleX(1)!important}
@@ -758,7 +788,7 @@ a{color:inherit;text-decoration:none}
 
 @media print{
   .mark-slide,.mark-out,.w-out,.hero-nav__i a,.hero-lang a,
-  .studio__mark,.studio__copy p,.info__title,.info__line{
+  .studio__mark,.studio__line,.info__title,.info__line{
     transition:none!important;transform:none!important}
   .endmark .endmark__line{transition:none!important;transform:scaleX(1)!important}
   .endmark .endmark__logo{transition:none!important;opacity:1!important;visibility:visible!important;transform:none!important}
@@ -766,7 +796,7 @@ a{color:inherit;text-decoration:none}
 
 @media (prefers-reduced-motion:reduce){
   .mark-slide,.hero-nav__i a,.hero-lang a,
-  .studio__mark,.studio__copy p,.info__title,.info__line{transform:none!important}
+  .studio__mark,.studio__line,.info__title,.info__line{transform:none!important}
   .endmark .endmark__line{transition:none;transform:scaleX(1)}
   .endmark .endmark__logo{transition:none;opacity:1;visibility:visible;transform:none}
 }
