@@ -124,28 +124,10 @@
 
     if (!ANIMATE) return;
 
-    /* THE IDLE LOOP, DOUBLE BUFFERED.
-       The clip does not close the way it opens. Measured across its 192 frames,
-       the last frame differs from the first by a mean of 1.0/255 over the
-       falcon, and 99% of every differing pixel is on the bird - so a plain
-       loop:true pops him into a slightly different pose every eight seconds,
-       which is the blink. There is no better cut either: every candidate end
-       frame from 175 to 191 is off by about the same amount, so trimming buys
-       nothing.
-       Two copies instead. One plays out while the other starts again from zero
-       underneath it, and they cross over. Both ease linearly over the same
-       .18s, so they sum to 1 the whole way and the empty room never shows
-       between them; the pose difference is a thousandth of full scale, which
-       at that speed is invisible. */
     this.idle = video(A.idle);
+    this.idle.loop = true;
     this.idle.style.opacity = 0;
     stage.appendChild(this.idle);
-
-    this.idleB = video(A.idle);
-    this.idleB.style.opacity = 0;
-    stage.appendChild(this.idleB);
-
-    this.idles = [this.idle, this.idleB];
 
     this.enter = video(A.enter);
     this.enter.style.opacity = 0;
@@ -215,35 +197,6 @@
     if (p && p.catch) p.catch(function () { clearTimeout(bail); giveUp(); });
   };
 
-  /* Hand the loop from whichever copy is playing to the other one, starting it
-     from the top. Called a fade's length before the current copy runs out. */
-  MediaFalcon.prototype.rollIdle = function () {
-    var cur = this.idle, nxt = this.idleB;
-    nxt.currentTime = 0;
-    var p = nxt.play();
-    if (p && p.catch) p.catch(function () {});
-    nxt.style.opacity = 1;
-    cur.style.opacity = 0;          // cur keeps playing to its last frame
-    this.idle = nxt;
-    this.idleB = cur;
-  };
-
-  /* Watch the live copy and roll it over before it ends. timeupdate is far too
-     coarse for this - it fires about four times a second, and the window here
-     is under two tenths. */
-  MediaFalcon.prototype.watchIdle = function () {
-    var self = this, FADE = 0.18;
-    cancelAnimationFrame(this.idleRaf);
-    function tick() {
-      self.idleRaf = requestAnimationFrame(tick);
-      if (self.state !== 'IDLE') return;
-      var v = self.idle;
-      if (!v.duration || !isFinite(v.duration)) return;
-      if (v.currentTime >= v.duration - FADE) self.rollIdle();
-    }
-    this.idleRaf = requestAnimationFrame(tick);
-  };
-
   MediaFalcon.prototype.toIdle = function () {
     /* The original crossfade, restored. Two layers easing opacity linearly over
        the same .18s always sum to exactly 1 - one rises by whatever the other
@@ -254,39 +207,11 @@
        entrance's last frame and the loop's first frame do not quite agree, and
        put a visible jump on the landing. */
     this.set('IDLE');
-
-    /* A LONG dissolve out of the entrance, not the standard .18s.
-
-       The two clips do not join. Measured over the falcon: the entrance's last
-       frame differs from the idle's first by a mean of 5.0/255 with ~15,000
-       pixels off, and that is not a timing problem or an alignment one - a
-       search over every rigid shift finds 0,0 is already the best, and a scan
-       of all 192 idle frames finds nothing closer than 4.25. He simply ends the
-       fly-in upright with his head raised and opens the loop crouched with his
-       head forward. Two different postures, baked into the renders.
-
-       Nothing in code can make those two frames the same. What code can do is
-       choose how long the eye is given to cross between them: at .18s it reads
-       as a jump, at .7s it reads as the bird settling after landing, which is
-       what he would actually do. This is mitigation, not a fix - the fix is a
-       re-rendered idle clip that opens on the landing pose. */
-    var LAND = '.7s';
-    var pair = [this.idle, this.enter];
-    pair.forEach(function (v) {
-      if (v) v.style.transition = 'opacity ' + LAND + ' linear';
-    });
-    setTimeout(function () {
-      pair.forEach(function (v) {
-        if (v) v.style.transition = 'opacity .18s linear';
-      });
-    }, 900);
-
     this.idle.style.opacity = 1;
     if (this.enter) this.enter.style.opacity = 0;
     if (this.canvas) this.canvas.style.opacity = 0;
     var p = this.idle.play();
     if (p && p.catch) p.catch(function () {});
-    this.watchIdle();
   };
 
   /* p runs 0 (perched) -> 1 (gone), driven by scroll in main.js */
@@ -300,8 +225,8 @@
     if (this.state !== 'EXIT') {
       this.set('EXIT');
       this.canvas.style.opacity = 1;
-      /* both copies, not just the live one - the other may be mid-crossover */
-      this.idles.forEach(function (v) { v.style.opacity = 0; v.pause(); });
+      this.idle.style.opacity = 0;
+      this.idle.pause();
     }
     var i = Math.round(p * (A.exitCount - 1));
     i = i < 0 ? 0 : i > A.exitCount - 1 ? A.exitCount - 1 : i;
