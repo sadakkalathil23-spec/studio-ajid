@@ -768,14 +768,17 @@ a{color:inherit;text-decoration:none}
   .hero-nav{font-size:19px;
     margin-top:calc(60px + clamp(20px,3vw,52px))}
   :root{--nav-size:19px}
-  .hero-nav__i a{padding-block:.75em}
+  /* Keep the mobile list compact and readable. The former .75em padding on
+     every link created large blank rows between the five labels. */
+  .hero-nav__i a{padding-block:.08em}
+  .hero-nav__i--social{margin-top:.5em}
 }
 
 @media (max-width:560px){
   /* one card and a clear slice of the next */
   .reel__card{width:72%}
 
-  /* THE ARTWORK, 100px to the left - phones only.
+  /* THE ARTWORK, 100px to the right - phones only.
      The painting is 16:9 and a phone held upright is nothing like it, so cover
      crops the sides hard and the falcon, which perches at the right, was mostly
      outside the frame. Sliding the crop window right by 100px brings him back
@@ -785,7 +788,7 @@ a{color:inherit;text-decoration:none}
      at the right edge. The variable is read by every layer at once - plate,
      both videos and the exit canvas - so the whole artwork and all of its
      animation move together and stay registered to each other. */
-  :root{--art-pos:calc(50% - 100px) 70%}
+  :root{--art-pos:calc(50% + 100px) 70%}
 }
 
 /* debug readout - add ?debug to the URL to show it */
