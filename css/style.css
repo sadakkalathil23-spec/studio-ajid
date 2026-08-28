@@ -761,14 +761,15 @@ a{color:inherit;text-decoration:none}
   /* THE ARTWORK, 100px to the left - phones only.
      The painting is 16:9 and a phone held upright is nothing like it, so cover
      crops the sides hard and the falcon, which perches at the right, was mostly
-     outside the frame. Sliding the crop window right by 100px brings him back
-     without changing the composition on any wider screen.
+     outside the frame. Sliding the crop window right by 50px brings him back
+     without changing the composition on any wider screen. 100 took the horse
+     too far off the left, so this is half of it.
        Done on object-position rather than by transforming the stage: the layers
      cover the frame exactly, so translating them would drag bare background in
      at the right edge. The variable is read by every layer at once - plate,
      both videos and the exit canvas - so the whole artwork and all of its
      animation move together and stay registered to each other. */
-  :root{--art-pos:calc(50% - 100px) 70%}
+  :root{--art-pos:calc(50% - 50px) 70%}
 }
 
 /* debug readout - add ?debug to the URL to show it */

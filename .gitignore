@@ -4,7 +4,11 @@ assets/idle/
 comfy/
 shots/
 data/
-*.mp4
+# Root-level render exports only. NOT assets/anim/*.mp4 - those are the H.264
+# fallbacks the <source> list falls back to, and they are the ONLY falcon
+# footage Safari and iOS can play, because neither supports WebM. A blanket
+# *.mp4 excluded them and the hero animation 404'd on the live site.
+/*.mp4
 
 # Editor/OS and local server leftovers
 node_modules/
