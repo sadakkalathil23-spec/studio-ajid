@@ -254,6 +254,33 @@
        entrance's last frame and the loop's first frame do not quite agree, and
        put a visible jump on the landing. */
     this.set('IDLE');
+
+    /* A LONG dissolve out of the entrance, not the standard .18s.
+
+       The two clips do not join. Measured over the falcon: the entrance's last
+       frame differs from the idle's first by a mean of 5.0/255 with ~15,000
+       pixels off, and that is not a timing problem or an alignment one - a
+       search over every rigid shift finds 0,0 is already the best, and a scan
+       of all 192 idle frames finds nothing closer than 4.25. He simply ends the
+       fly-in upright with his head raised and opens the loop crouched with his
+       head forward. Two different postures, baked into the renders.
+
+       Nothing in code can make those two frames the same. What code can do is
+       choose how long the eye is given to cross between them: at .18s it reads
+       as a jump, at .7s it reads as the bird settling after landing, which is
+       what he would actually do. This is mitigation, not a fix - the fix is a
+       re-rendered idle clip that opens on the landing pose. */
+    var LAND = '.7s';
+    var pair = [this.idle, this.enter];
+    pair.forEach(function (v) {
+      if (v) v.style.transition = 'opacity ' + LAND + ' linear';
+    });
+    setTimeout(function () {
+      pair.forEach(function (v) {
+        if (v) v.style.transition = 'opacity .18s linear';
+      });
+    }, 900);
+
     this.idle.style.opacity = 1;
     if (this.enter) this.enter.style.opacity = 0;
     if (this.canvas) this.canvas.style.opacity = 0;
