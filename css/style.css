@@ -676,8 +676,11 @@ a{color:inherit;text-decoration:none}
   font-size:25px;
   line-height:1.2308;                      /* 48 / 39 */
   font-weight:300;
-  text-align:justify;
-  -webkit-hyphens:auto;hyphens:auto;       /* the PSD breaks words; so does this */
+  /* Natural spacing at every width. Justification exaggerated the gaps on
+     wide screens because each animated line is a separate block. */
+  text-align:start;
+  word-spacing:normal;
+  -webkit-hyphens:none;hyphens:none;
   text-wrap:pretty}
 .studio__copy p + p{margin-top:1.2308em}   /* one line of leading between paras */
 .studio__copy p:first-child{text-indent:0}
@@ -686,29 +689,19 @@ a{color:inherit;text-decoration:none}
    edge, one beat at a time, using the hero navigation's speed and easing.
    main.js adds .is-inview once and never removes it, so the reveal cannot
    reverse or replay while scrolling. */
-/* The copy sets as two flowing paragraphs, not five fixed lines. Each span was
-   display:block, which froze the breaks exactly where the layout was drawn: at
-   25px against a measure that keeps scaling with the window, that left the long
-   lines stopping 400-790px short of the right inset while the left stayed on
-   150. Set inline, the words run up to fill each line by themselves, and they
-   go on doing it at every width instead of at the one it was drawn at.
-   text-align:justify above then pulls both edges flush; only the closing line of
-   each paragraph is short, which is how a paragraph is meant to end.
-     The spans stay in the markup - they carry the Arabic through lang.js - and
-   the entrance moves onto the paragraphs, so the cascade is badge, first
-   paragraph, second paragraph on the same tenth-of-a-second beat. */
 /* One block per REAL line - studio-lines.js measures where the browser breaks
-   the copy and wraps each of those lines in its own span, numbered in --i. So
-   the lines fill the measure (the browser chose the breaks) and still enter one
-   at a time (they are elements), which hard-coded spans could only do one of.
+   the copy and wraps each of those lines in its own span, numbered in --i. The
+   browser therefore keeps choosing the responsive breaks while every line
+   remains an independent animation item. The words use natural spacing rather
+   than forced justification, which avoids spacing rivers at extreme widths.
    The badge leads, then each line a tenth of a second behind the one above it,
    the same beat and easing as the hero navigation and the Studio address. */
 .studio__line{display:block;
-  /* Flush both edges. Each line is its own block, so it is also its own last
-     line, and plain justify never stretches a last line - text-align-last is
-     what pulls the right edge out to the inset. The closing line of each
-     paragraph is exempt: it is meant to be short. */
-  text-align-last:justify}
+  /* Each measured line remains its own animation item, but its words keep the
+     font's natural spacing. `start` also follows the Arabic RTL direction. */
+  text-align:start;
+  text-align-last:auto;
+  word-spacing:normal}
 .studio__line--last{text-align-last:auto}
 .studio__mark,.studio__line{
   transform:translate3d(calc(-100% - var(--gutter)),0,0);
