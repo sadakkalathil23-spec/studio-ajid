@@ -1,0 +1,17 @@
+# Render output and working files — the site does not load any of these.
+# assets/idle alone is 472MB of PNG frames left over from the falcon renders.
+assets/idle/
+comfy/
+shots/
+data/
+*.mp4
+
+# Editor/OS and local server leftovers
+node_modules/
+.DS_Store
+Thumbs.db
+
+# The .bak files kept while iterating on the CSS and markup
+*.bak
+*.bak-*
+*.orig

@@ -1,0 +1,59 @@
+@font-face{font-family:"Hayyakum";src:url("../assets/fonts/HayyakumAllah-Light.woff2") format("woff2");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Hayyakum";src:url("../assets/fonts/HayyakumAllah-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+:root{--ink:#0c152a;--paper:#fff;--gutter:clamp(24px,6.5vw,124px);--ease:cubic-bezier(.25,.25,.35,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--paper);color:var(--ink)}
+body{min-height:100vh;min-height:100svh;font-family:"Hayyakum",Georgia,serif;font-weight:300;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button,input,select,textarea{font:inherit;color:inherit}
+.contact-head{display:flex;align-items:flex-start;justify-content:space-between;padding:32px var(--gutter) 0}
+/* No overflow:hidden. The About page masks nothing - its badge and copy
+   lines simply start beyond the left edge and travel the whole way in - and
+   the hero lockup was taken off its masks for the same reason. -130% of a
+   32px mark was only 42px, which needed the mask to hide the rest; the
+   shared distance below clears the frame on its own. */
+.contact-brand{display:block;width:32px}
+.contact-brand svg{display:block;width:100%;fill:var(--ink);
+  transform:translate3d(calc(-100% - var(--gutter)),0,0);
+  transition:transform 1s var(--ease);will-change:transform}
+.contact-nav{display:flex;align-items:center;gap:48px;font-size:16px;letter-spacing:.025em}
+.contact-nav a,.contact-nav button{position:relative;background:none;border:0;cursor:pointer}
+.contact-nav a::after,.contact-nav button::after,.map-link::after,.contact-email::after,.contact-footer a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform .45s var(--ease)}
+.contact-nav a:hover::after,.contact-nav button:hover::after,.map-link:hover::after,.contact-email:hover::after,.contact-footer a:hover::after{transform:scaleX(1)}
+main{padding-top:clamp(90px,12vw,190px)}
+.contact-intro{padding-inline:var(--gutter);max-width:1500px}.contact-kicker{font-size:15px;letter-spacing:.055em;margin-bottom:24px}
+.contact-intro h1{font-size:clamp(58px,10vw,170px);font-weight:300;line-height:.88;letter-spacing:-.025em}
+.contact-deck{max-width:830px;margin-top:42px;font-size:clamp(22px,2.05vw,36px);line-height:1.25}
+/* The About page's entrance, to the letter: the same distance, the same 1s,
+   the same easing and the same tenth-of-a-second beat between elements.
+   translate3d rather than translateX, and will-change with it, because that
+   is what .studio__mark and .studio__line use - a plain translateX leaves
+   the browser repainting a 170px heading on the main thread every frame,
+   which is what made this one judder where About does not.
+     It runs once. .is-ready is set on the document a frame after load and
+   nothing ever takes it off, so the entrance cannot replay or reverse - the
+   same guarantee .is-inview gives About. Verified: no replay on scrolling
+   away and back, and none on switching language. */
+.contact-kicker,.contact-intro h1,.contact-deck{
+  transform:translate3d(calc(-100% - var(--gutter)),0,0);
+  transition:transform 1s var(--ease);will-change:transform}
+.contact-intro h1{transition-delay:.1s}.contact-deck{transition-delay:.2s}
+.is-ready .contact-brand svg,.is-ready .contact-kicker,.is-ready .contact-intro h1,.is-ready .contact-deck{transform:translate3d(0,0,0)}
+.contact-rule{height:1px;background:var(--ink);margin-top:clamp(64px,8vw,124px);transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.19,1,.22,1) .3s}   /* 1.4s: the About rule */.is-ready .contact-rule{transform:scaleX(1)}
+.contact-grid{display:grid;grid-template-columns:minmax(230px,.7fr) minmax(0,1.6fr);gap:clamp(70px,10vw,180px);padding:clamp(64px,7vw,116px) var(--gutter) clamp(90px,10vw,170px)}
+.contact-details{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;min-height:370px;font-size:20px;line-height:1.3}.contact-details h2{font-size:28px;font-weight:400;margin-bottom:34px}.contact-details p+p{margin-top:25px}.contact-email{position:relative;display:inline-block;margin-top:25px}
+.map-link{display:inline-flex;gap:10px;position:relative;font-size:16px}
+.contact-form{display:grid;grid-template-columns:1fr 1fr;gap:38px 34px}.field{display:flex;flex-direction:column;gap:9px;min-width:0}.field--wide{grid-column:1/-1}
+.field label{display:flex;gap:5px;font-size:15px;letter-spacing:.025em}.field label em{font-style:normal}
+input,select,textarea{width:100%;border:0;border-bottom:1px solid rgba(12,21,42,.55);border-radius:0;background:transparent;outline:0;padding:8px 0 12px;font-size:20px;font-weight:300;transition:border-color .25s}
+textarea{resize:vertical;min-height:154px;line-height:1.35}select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 8px) 51%,calc(100% - 3px) 51%;background-size:5px 5px;background-repeat:no-repeat;padding-right:24px}
+input:focus,select:focus,textarea:focus{border-color:var(--ink)}.field--honeypot{position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden}
+.consent{display:flex;align-items:flex-start;gap:13px;font-size:15px;line-height:1.35;cursor:pointer}.consent input{appearance:none;width:16px;height:16px;flex:0 0 16px;padding:0;margin-top:1px;border:1px solid var(--ink);cursor:pointer}.consent input:checked{background:var(--ink);box-shadow:inset 0 0 0 3px var(--paper)}
+.form-actions{display:flex;align-items:center;gap:28px;min-height:56px}.submit-button{display:inline-flex;align-items:center;justify-content:space-between;gap:55px;min-width:240px;padding:15px 17px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;transition:background .3s,color .3s}.submit-button:hover{background:var(--paper);color:var(--ink)}.submit-button:disabled{opacity:.45;cursor:wait}
+.form-status{font-size:15px;line-height:1.3}.form-status.is-error{color:#8d2323}
+.contact-footer{display:flex;justify-content:space-between;border-top:1px solid var(--ink);padding:24px var(--gutter) 34px;font-size:14px;letter-spacing:.025em}.contact-footer a{position:relative}
+[dir="rtl"] .contact-brand svg,[dir="rtl"] .contact-kicker,[dir="rtl"] .contact-intro h1,[dir="rtl"] .contact-deck{transform:translate3d(calc(100% + var(--gutter)),0,0)}
+[dir="rtl"].is-ready .contact-brand svg,[dir="rtl"].is-ready .contact-kicker,[dir="rtl"].is-ready .contact-intro h1,[dir="rtl"].is-ready .contact-deck{transform:translate3d(0,0,0)}
+[dir="rtl"] select{background-position:8px 51%,13px 51%;padding-left:24px;padding-right:0}
+@media(max-width:820px){.contact-head{padding-top:24px}.contact-nav{gap:28px}main{padding-top:90px}.contact-deck{margin-top:30px}.contact-grid{grid-template-columns:1fr;gap:70px}.contact-details{min-height:0;gap:52px}.contact-form{grid-template-columns:1fr}.field--wide{grid-column:auto}.form-actions{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){.contact-form{gap:32px}.contact-intro h1{font-size:58px}.contact-deck{font-size:22px}.submit-button{width:100%}.contact-footer{gap:30px;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}.contact-brand svg,.contact-kicker,.contact-intro h1,.contact-deck{transform:none!important}.contact-rule{transform:scaleX(1)!important}}

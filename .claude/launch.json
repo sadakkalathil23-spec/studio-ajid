@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "falcon-scroll",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["server.js"],
+      "port": 3025
+    }
+  ]
+}

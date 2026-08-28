@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title data-ar="عجيد — استوديو تصميم داخلي">AJID — Interior Design Studio</title>
+<link rel="icon" href="assets/brand/favicon.svg">
+<meta name="description" content="Studio Ajid is an interior design studio in Msheireb, Doha, working across residential, hospitality and objects.">
+<meta name="theme-color" content="#0c152a">
+<!-- Link previews: WhatsApp, iMessage and the rest read these. og:image wants
+     an absolute URL, so it is filled in once the site has its final domain. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Studio Ajid">
+<meta property="og:title" content="AJID — Interior Design Studio">
+<meta property="og:description" content="Studio Ajid is an interior design studio in Msheireb, Doha, working across residential, hospitality and objects.">
+<meta property="og:image" content="assets/plate.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="assets/brand/favicon.svg">
+
+<link rel="preload" as="image" href="assets/plate.jpg" fetchpriority="high">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ VIEWPORT (fixed) ============ -->
+<div class="viewport">
+
+  <!-- PAGE 2 sits behind, slides up into place. Empty on purpose — drop the
+       real second section in here; the transition needs nothing from it. -->
+  <section class="page page2" id="page2"></section>
+
+  <!-- PAGE 1 — the painting. Slides up on scroll. overflow visible so the falcon can leave it -->
+  <section class="page page1" id="page1">
+
+    <svg class="scene" viewBox="0 0 1400 1130" preserveAspectRatio="xMidYMid slice"
+         xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="wall" cx="50%" cy="42%" r="72%">
+          <stop offset="0%"  stop-color="#7d1a24"/>
+          <stop offset="55%" stop-color="#5a0f1a"/>
+          <stop offset="100%" stop-color="#280408"/>
+        </radialGradient>
+        <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#3c4715"/>
+          <stop offset="100%" stop-color="#141a06"/>
+        </linearGradient>
+        <linearGradient id="silk" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"  stop-color="#e8b93c"/>
+          <stop offset="55%" stop-color="#cf9a1e"/>
+          <stop offset="100%" stop-color="#96690d"/>
+        </linearGradient>
+        <linearGradient id="wood" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8a5227"/>
+          <stop offset="100%" stop-color="#4a2810"/>
+        </linearGradient>
+        <linearGradient id="hide" x1="0.2" y1="0" x2="0.8" y2="1">
+          <stop offset="0%"  stop-color="#f4f2ee"/>
+          <stop offset="60%" stop-color="#d9d6cf"/>
+          <stop offset="100%" stop-color="#a9a69d"/>
+        </linearGradient>
+        <linearGradient id="porc" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#f2f5fa"/>
+          <stop offset="100%" stop-color="#c3cddc"/>
+        </linearGradient>
+        <filter id="soft"><feGaussianBlur stdDeviation="1.4"/></filter>
+        <filter id="glow"><feGaussianBlur stdDeviation="26"/></filter>
+      </defs>
+
+      <!-- PLATE: replaced by assets/plate.jpg when that file is present -->
+      <g id="plate" filter="url(#soft)">
+        <rect width="1400" height="1130" fill="url(#wall)"/>
+        <rect y="752" width="1400" height="378" fill="url(#floor)"/>
+        <ellipse cx="700" cy="1000" rx="620" ry="120" fill="#000" opacity=".45" filter="url(#glow)"/>
+
+        <!-- settee -->
+        <g id="sofa">
+          <path d="M300 640 C300 470 340 430 470 430 L1010 430 C1105 430 1120 470 1118 600
+                   L1118 700 L300 700 Z" fill="url(#wood)"/>
+          <path d="M330 640 C330 480 372 460 486 458 L996 448 C1078 446 1092 480 1090 596
+                   L1090 660 L330 660 Z" fill="url(#silk)"/>
+          <path d="M258 596 C258 548 306 540 330 572 L330 792 L262 792 Z" fill="url(#silk)"/>
+          <path d="M1090 572 C1114 540 1160 550 1158 598 L1158 792 L1090 792 Z" fill="url(#silk)"/>
+          <path d="M246 590 C246 528 316 518 344 566 L326 590 C310 560 268 566 268 596 Z" fill="url(#wood)"/>
+          <path d="M1076 566 C1104 518 1176 530 1174 592 L1152 596 C1152 566 1112 560 1094 590 Z" fill="url(#wood)"/>
+          <path d="M300 756 C300 736 330 730 400 730 L1030 730 C1090 730 1118 736 1118 758
+                   L1112 810 L306 810 Z" fill="url(#silk)"/>
+          <path d="M292 806 L1126 806 L1116 872 C1116 890 1090 898 1050 898 L370 898
+                   C326 898 300 888 300 870 Z" fill="url(#wood)"/>
+          <path d="M300 880 C286 936 292 976 306 1002 L338 998 C322 962 322 926 336 886 Z" fill="url(#wood)"/>
+          <path d="M1114 880 C1130 936 1124 976 1110 1002 L1078 998 C1094 962 1094 926 1080 886 Z" fill="url(#wood)"/>
+          <path d="M660 890 C640 940 656 972 690 990 C724 972 740 940 720 890 Z" fill="url(#wood)"/>
+        </g>
+
+        <!-- horse (placeholder) -->
+        <g id="horse">
+          <path d="M596 606 C700 560 880 566 990 620 C1052 652 1058 726 1010 762
+                   C930 820 700 828 604 782 C544 752 540 636 596 606 Z" fill="url(#hide)"/>
+          <path d="M574 640 C556 552 540 468 552 404 C560 356 596 340 616 372
+                   C640 412 648 520 654 604 C658 646 596 692 574 640 Z" fill="url(#hide)"/>
+          <path d="M548 392 C520 372 508 402 522 434 C540 476 588 528 626 540
+                   C664 552 690 526 676 498 C656 456 588 418 548 392 Z" fill="url(#hide)"/>
+          <path d="M556 356 L548 300 L586 344 Z M604 350 L616 296 L634 350 Z" fill="#2b2a28"/>
+          <ellipse cx="596" cy="452" rx="11" ry="13" fill="#241f1b"/>
+          <ellipse cx="664" cy="512" rx="15" ry="11" fill="#2a2422" opacity=".8"/>
+          <path d="M552 398 C566 470 570 556 580 636 C566 646 550 640 546 618
+                   C534 540 528 452 536 396 Z" fill="#eceae4" opacity=".85"/>
+          <path d="M540 704 C500 748 462 812 452 866 L500 876 C516 826 552 776 588 744 Z" fill="url(#hide)"/>
+          <path d="M446 862 L506 872 L502 906 L444 898 Z" fill="#2a2320"/>
+          <path d="M986 682 C1032 716 1040 800 1006 840 C990 856 966 850 968 826
+                   C972 774 964 720 950 692 Z" fill="#e9e6df"/>
+        </g>
+
+        <!-- vases -->
+        <g id="vase-left">
+          <path d="M56 590 L196 590 L176 660 C214 720 216 900 194 1000 L58 1000
+                   C36 900 38 720 76 660 Z" fill="url(#porc)"/>
+          <g fill="#2f4f8f" opacity=".72">
+            <ellipse cx="96"  cy="720" rx="20" ry="13"/><ellipse cx="152" cy="790" rx="17" ry="11"/>
+            <ellipse cx="82"  cy="860" rx="22" ry="14"/><ellipse cx="150" cy="920" rx="19" ry="12"/>
+            <ellipse cx="104" cy="960" rx="15" ry="10"/>
+          </g>
+          <g fill="#22380f"><ellipse cx="126" cy="500" rx="96" ry="80"/><ellipse cx="70" cy="530" rx="52" ry="46"/><ellipse cx="188" cy="524" rx="48" ry="42"/></g>
+          <g fill="#c9b03a"><ellipse cx="150" cy="300" rx="26" ry="20"/><ellipse cx="106" cy="330" rx="22" ry="17"/></g>
+        </g>
+        <g id="vase-right">
+          <path d="M1206 590 L1346 590 L1326 660 C1364 720 1366 900 1344 1000 L1208 1000
+                   C1186 900 1188 720 1226 660 Z" fill="url(#porc)"/>
+          <g fill="#2f4f8f" opacity=".72">
+            <ellipse cx="1246" cy="716" rx="20" ry="13"/><ellipse cx="1306" cy="784" rx="17" ry="11"/>
+            <ellipse cx="1234" cy="858" rx="22" ry="14"/><ellipse cx="1302" cy="918" rx="19" ry="12"/>
+            <ellipse cx="1258" cy="958" rx="15" ry="10"/>
+          </g>
+          <g fill="#22380f"><ellipse cx="1276" cy="500" rx="96" ry="80"/><ellipse cx="1220" cy="530" rx="52" ry="46"/><ellipse cx="1338" cy="524" rx="48" ry="42"/></g>
+          <g fill="#c9b03a"><ellipse cx="1300" cy="296" rx="26" ry="20"/><ellipse cx="1256" cy="326" rx="22" ry="17"/></g>
+        </g>
+      </g>
+
+      <!-- FALCON RIG
+           fx-anchor = the perch contact point, in scene coordinates.
+           Everything inside is drawn in a local 400x300 space whose
+           point (192,224) is the feet — hence the translate(-192,-224). -->
+      <g id="fx-anchor" transform="translate(1052,470)">
+        <ellipse id="fx-shadow" cx="2" cy="6" rx="46" ry="9" fill="#1a0206" opacity=".45"/>
+        <g id="fx-fly">
+          <g id="fx-pitch">
+            <g transform="translate(-192,-224)">
+
+              <!-- FAR WING (open, behind the body) -->
+              <g id="wing-far" opacity="0" transform="translate(16 12)">
+                <g id="wf-inner">
+                  <path d="M196 98 C214 76 238 56 258 42 L280 62
+                           C266 86 252 118 244 152 C224 152 204 128 196 98 Z" fill="#5f4e3a"/>
+                  <g id="wf-outer">
+                    <path d="M258 42 C286 18 318 -6 348 -24 L356 -8
+                             C336 8 312 30 292 50 C288 54 283 58 280 62 Z" fill="#51422f"/>
+                  </g>
+                </g>
+              </g>
+
+              <!-- TAIL: angles down and back, as it hangs over the perch edge -->
+              <g id="fx-tail">
+                <path d="M224 172 C250 187 278 205 300 217 C301 228 297 238 291 243
+                         C266 228 238 210 214 196 Z" fill="#c0ab89"/>
+                <path d="M283 207 C290 211 296 214 300 217 C301 228 297 238 291 243
+                         C287 240 281 236 275 232 Z" fill="#3a3025"/>
+                <g stroke="#8d7a5c" stroke-width="1.4" opacity=".5" fill="none">
+                  <path d="M223 179 C250 195 275 211 295 224"/>
+                  <path d="M220 187 C247 203 271 218 291 231"/>
+                </g>
+              </g>
+
+              <!-- BODY: upright teardrop, leaning slightly forward -->
+              <g id="fx-body">
+                <path d="M170 104 C152 120 142 150 148 178 C154 202 176 215 200 213
+                         C226 211 242 194 245 168 C248 140 240 114 224 102
+                         C208 90 184 90 170 104 Z" fill="#dfcba8"/>
+                <path d="M164 116 C150 138 145 166 151 188 C159 205 175 213 189 213
+                         C175 190 165 150 173 116 Z" fill="#f2e8d2"/>
+                <g fill="#5b4630" opacity=".8">
+                  <ellipse cx="186" cy="130" rx="4" ry="3"/>  <ellipse cx="208" cy="124" rx="3.8" ry="2.8"/>
+                  <ellipse cx="196" cy="152" rx="4.4" ry="3.2"/><ellipse cx="220" cy="146" rx="4" ry="3"/>
+                  <ellipse cx="184" cy="168" rx="4.2" ry="3"/> <ellipse cx="208" cy="176" rx="4.6" ry="3.4"/>
+                  <ellipse cx="228" cy="166" rx="3.8" ry="2.8"/><ellipse cx="196" cy="194" rx="4.2" ry="3"/>
+                  <ellipse cx="220" cy="196" rx="3.6" ry="2.6"/>
+                </g>
+              </g>
+
+              <!-- LEGS: short — most of the leg is feathered and hidden -->
+              <g id="fx-legs">
+                <path d="M182 200 L180 219 L168 226 M180 219 L192 226 M180 219 L182 227"
+                      stroke="#e2b830" stroke-width="6.5" fill="none" stroke-linecap="round"/>
+                <path d="M200 202 L199 218 L188 225 M199 218 L211 225 M199 218 L201 226"
+                      stroke="#c9a123" stroke-width="6" fill="none" stroke-linecap="round"/>
+              </g>
+
+              <!-- FOLDED WING: lies along the back, tip toward the tail base -->
+              <g id="wing-folded">
+                <path d="M206 102 C230 110 246 140 252 172 C256 192 250 204 241 199
+                         C228 191 214 160 206 128 Z" fill="#7c6749"/>
+                <path d="M214 112 C232 124 244 148 248 172 C238 164 224 140 214 118 Z" fill="#907a58"/>
+                <g fill="#3f3323" opacity=".85">
+                  <ellipse cx="222" cy="128" rx="3.6" ry="2.6"/><ellipse cx="234" cy="150" rx="4" ry="2.8"/>
+                  <ellipse cx="242" cy="174" rx="3.6" ry="2.6"/><ellipse cx="228" cy="164" rx="3.8" ry="2.8"/>
+                  <ellipse cx="244" cy="190" rx="3.2" ry="2.4"/>
+                </g>
+                <g stroke="#3a2f20" stroke-width="1.3" opacity=".5" fill="none">
+                  <path d="M212 116 C232 134 244 160 248 186"/>
+                  <path d="M208 124 C226 142 238 166 243 192"/>
+                </g>
+              </g>
+
+              <!-- HEAD: the collar shape hides the neck joint as the head turns.
+                   Neck pivot = 176,110 -->
+              <g id="fx-head">
+                <path d="M150 96 L214 96 L216 138 C196 149 168 149 150 136 Z" fill="#dfcba8"/>
+                <path d="M176 60 C200 60 214 76 214 96 C214 116 198 130 176 130
+                         C154 130 138 116 138 96 C138 76 154 60 176 60 Z" fill="#f0e7d3"/>
+                <path d="M143 86 C148 68 161 58 178 58 C196 58 210 68 214 88
+                         C198 74 162 74 143 86 Z" fill="#8f7346"/>
+                <path d="M200 74 C212 84 216 100 212 116 C214 98 210 82 198 72 Z" fill="#7d6339"/>
+                <path d="M150 82 C143 80 138 84 137 92 C136 99 140 104 146 105
+                         C144 98 145 89 151 86 Z" fill="#e2b830"/>
+                <path d="M147 84 C137 83 129 88 127 95 C126 101 131 106 138 105
+                         C136 98 139 91 146 89 Z" fill="#4a4a48"/>
+                <path d="M127 95 C123 100 125 106 132 106 C128 102 126 99 127 95 Z" fill="#232120"/>
+                <circle cx="158" cy="88" r="9.5" fill="none" stroke="#d9a92a" stroke-width="3"/>
+                <ellipse cx="158" cy="88" rx="7.4" ry="7.6" fill="#131110"/>
+                <circle cx="155.8" cy="85.6" r="2.2" fill="#fff" opacity=".85"/>
+                <g id="fx-lid" transform="translate(158,88) scale(1,0) translate(-158,-88)">
+                  <ellipse cx="158" cy="88" rx="8.4" ry="8.6" fill="#ddceb2"/>
+                </g>
+                <path d="M154 95 C153 103 154 110 157 115 C161 111 162 103 161 95 Z"
+                      fill="#5a482e" opacity=".95"/>
+                <g fill="#6a563b" opacity=".7">
+                  <ellipse cx="186" cy="80" rx="3" ry="2.2"/><ellipse cx="200" cy="94" rx="2.8" ry="2"/>
+                  <ellipse cx="190" cy="108" rx="3" ry="2.2"/><ellipse cx="176" cy="122" rx="2.8" ry="2"/>
+                </g>
+              </g>
+
+              <!-- NEAR WING (open, in front) -->
+              <g id="wing-near" opacity="0">
+                <g id="wn-inner">
+                  <path d="M196 98 C214 76 238 56 258 42 L280 62
+                           C266 86 252 118 244 152 C224 152 204 128 196 98 Z" fill="#8c7757"/>
+                  <!-- secondaries: the darker trailing band of the arm wing -->
+                  <path d="M280 62 C266 86 252 118 244 152 C236 152 230 149 226 145
+                           C238 116 252 88 266 66 Z" fill="#6d5a41"/>
+                  <path d="M206 96 C222 78 240 62 254 50 L262 58
+                           C246 74 232 96 224 122 C214 116 208 106 206 96 Z"
+                        fill="#9c8663" opacity=".6"/>
+                  <g id="wn-outer">
+                    <path d="M258 42 C286 18 318 -6 348 -24 L356 -8
+                             C336 8 312 30 292 50 C288 54 283 58 280 62 Z" fill="#7a6549"/>
+                    <g stroke="#43361f" stroke-width="1.5" opacity=".42" fill="none">
+                      <path d="M268 44 C294 22 320 2 346 -18"/>
+                      <path d="M274 50 C300 28 324 8 350 -12"/>
+                      <path d="M280 56 C304 36 328 16 353 -3"/>
+                    </g>
+                  </g>
+                </g>
+              </g>
+
+            </g>
+          </g>
+        </g>
+      </g>
+    </svg>
+
+    <!-- photoreal path: plate + alpha footage layers get injected here -->
+    <div class="media-stage" id="media-stage"></div>
+
+    <!-- END MARK — the line and the AJID monogram, measured off line.psd
+         (1920x1080): a 1px rule, and the mark 27x23 sitting 17px in from the
+         right edge and 13px under the rule. It sits INSIDE page 1, 25px below
+         the image, so it travels up with the painting and reads as part of it.
+         Built as its own block so the same thing can close any later page. -->
+    <div class="endmark" id="endmark">
+      <span class="endmark__line"></span>
+      <span class="endmark__logo">
+        <svg class="endmark__svg" viewBox="370.88 396.13 338.27 287.74" role="img" aria-label="AJID">
+          <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+          <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+          <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+        </svg>
+      </span>
+    </div>
+
+    <!-- AJID hero lockup + navigation, laid out to the client reference:
+         English wordmark hard into the top-left at 46% width, EN opposite it,
+         the section list stacked directly beneath, and the Arabic wordmark
+         bottom-right at the same 46%. Everything sits inside the gutter now —
+         nothing bleeds off the edge. -->
+    <div class="hero-ui" id="heroUi">
+
+      <div class="hero-head">
+        <div class="hero-top">
+          <h1 class="hero-mark hero-mark--lat" id="markLat">
+            <span class="sr-only">AJID — Interior Design Studio</span>
+            <span class="mark-out"><span class="mark-slide"><svg viewBox="182.44 472.22 715.08 135.55" role="presentation" aria-hidden="true">
+            <path class="ltr" style="--i:0" d="M316.74,547.83h-35.74l-27.44-75.6h-30.88l6.11,22.11-15.85,43.8-3.51,9.69-12.86,35.53-12.39,22.32h25.35l.19-22.32,8.39-23.06h1.49c17.26,0,34.49-.24,51.73-.08,4.98.03,10.06.06,15.16.24,10.9.38,21.86,1.54,31.96,5.31.19.06.36.14.56.22l-2.27-18.16ZM251.09,547.83s.05.05.08.08h-28.49l.03-.08,19.04-52.73,19,52.65.03.08h-9.69ZM293.98,583.57l-4.95-13.66h-20.16l4.84,13.59.19,22.18h32.47l-12.39-22.32v.21Z"/>
+            <path class="ltr" style="--i:1" d="M408.71,490.53c9.91-4,26.69-5.91,42.13-5.91h20.4v79.69c0,16.96-7.63,31.07-28.21,31.07-19.25,0-36.79-10.87-43.85-26.5v27.26c10.29,7.43,27.64,11.63,43.85,11.63,34.31,0,47.28-20.21,47.28-36.41v-77.01l5.91-22.11h-85.21l-2.29,18.3Z"/>
+            <polygon class="ltr" style="--i:2" points="659.41 472.23 628.15 472.23 634.25 494.35 634.25 583.37 628.15 605.67 659.41 605.67 653.31 583.37 653.31 494.35 659.41 472.23"/>
+            <path class="ltr" style="--i:3" d="M831.2,472.23h-47.28l6.1,22.11v89.02l-6.1,22.3h47.28c43.08,0,64.62-26.69,64.62-66.72s-22.3-66.72-64.62-66.72ZM826.05,593.28h-16.97v-108.66h16.97c38.89,0,50.71,24.21,50.71,54.33s-14.11,54.33-50.71,54.33Z"/>
+          </svg></span></span>
+          </h1>
+          <span class="hero-lang" id="heroLang"><span class="w-out"><a href="#" class="js-lang" data-en="AR" data-ar-label="EN" aria-label="Switch to Arabic">AR</a></span></span>
+        </div>
+
+        <nav class="hero-nav" id="heroNav" aria-label="Primary">
+          <span class="hero-nav__i" style="--i:0"><span class="w-out"><a href="category.html?c=residential" data-ar="سكني">Residential</a></span></span>
+          <span class="hero-nav__i" style="--i:1"><span class="w-out"><a href="category.html?c=hospitality" data-ar="ضيافة">Hospitality</a></span></span>
+          <span class="hero-nav__i" style="--i:2"><span class="w-out"><a href="contact.html" data-ar="تواصل">Contact</a></span></span>
+          <span class="hero-nav__i" style="--i:3"><span class="w-out"><a href="#about" data-ar="نبذة">About</a></span></span>
+          <span class="hero-nav__i hero-nav__i--social" style="--i:4"><span class="w-out"><a href="https://www.instagram.com/studioajid/" target="_blank" rel="noopener" data-ar="إنستغرام">Instagram</a></span></span>
+        </nav>
+      </div>
+
+      <div class="hero-mark hero-mark--ar" id="markAr" lang="ar" dir="rtl">
+        <span class="mark-out"><span class="mark-slide"><svg viewBox="182.44 475.77 715.08 128.46" role="presentation" aria-hidden="true">
+            <path class="ar-body" d="M871.49,559.48l-36.64-.05h62.67l-2.47-14.01-2-11.41c-11.45,6.57-23.51,10.71-38.88,11.41h-37.16c-.28,0-.47-.42-.61-1.07-.14-.84-.23-1.72-.37-2.61v-.42c-1.35-11.64-1.26-23.8,2.7-34.83,2.33-6.47,6.43-12.48,12.29-15.97,13.41-7.91,29.24-.98,39.53,8.94.05,0,.05.05.05.05,1.02.98,2,2,2.93,3.07,1.96,2.23,3.59,4.7,5.22,7.45l.6-4.19,1.54-10.99,1.12-7.26c-5.41-2.86-11.29-5.59-18.1-7.66-1-.22-2.64-.59-3.64-.81-11.22-1.68-22.86-2.1-33.95.75-14.53,3.72-26.45,13.31-32.08,27.33-2.1,5.31-3.59,11.27-4.47,17.74-.93,6.47-1.26,13.27-1.02,20.49h-96.71c.23-7.22-.09-14.01-1.02-20.49-.84-6.47-2.37-12.43-4.47-17.74-5.63-14.02-17.55-23.61-32.08-27.33-11.08-2.84-22.72-2.42-33.95-.75-1,.22-2.64.59-3.64.81-6.81,2.07-12.69,4.8-18.1,7.66l1.12,7.26,1.54,10.99.6,4.19c1.63-2.75,3.26-5.22,5.22-7.45.93-1.07,1.91-2.1,2.93-3.07t.05-.05c10.24-9.92,26.12-16.85,39.53-8.94,5.87,3.49,9.92,9.5,12.29,15.97,3.96,11.03,4.05,23.19,2.75,34.83,0,.19-.05.28-.05.42-.14.89-.23,1.77-.33,2.61-.19.65-.37,1.07-.65,1.07h-93.69s.01-.07.01-.11c-.07.07-.13.11-.21.11h-14.82c.08,0,.16,0,.24,0h-83.69c-1.96,0-3.73-.42-5.31-1.16-1.44-.7-2.23-1.82-2.33-3.49-.05-.14-.05-.28-.05-.42l1.26-64.58-25.24,4.05c7.12,12.62,10.1,29.52,10.1,47.3v14.3c0,.74-.28,1.35-.84,1.81-.56.51-1.3.98-2.28,1.26-.93.37-1.96.61-3.12.7-1.12.19-2.28.23-3.4.23h-163.38c.23-7.22-.09-14.01-1.03-20.49-.88-6.47-2.37-12.43-4.52-17.74-5.63-14.02-17.51-23.61-32.08-27.33-11.04-2.84-22.68-2.42-33.9-.75-.99.22-2.62.58-3.61.8-6.86,2.07-12.71,4.81-18.13,7.67l1.12,7.26,1.54,10.99.56,3.87c1.54-2.61,3.17-4.98,5.03-7.13,3.26-3.87,6.89-7.03,10.71-9.5,3.82-2.47,7.87-4.19,12.01-5.12,1.86-.47,3.73-.75,5.54-.84.28,0,.6,0,.88-.05h.93c.33,0,.61,0,.93.05,3.96.14,7.96,1.17,11.73,3.4,5.87,3.49,9.96,9.5,12.29,15.97,3.96,11.03,4.05,23.19,2.7,34.83,0,.19-.05.28-.05.42-.09.89-.19,1.77-.33,2.61-.09.47-.23.79-.37.98,0,.05-.05.09-.05.19h-9.83c-1.72,0-3.45,0-5.17-.09h-8.15c-10.57-.47-19.56-2.56-27.84-5.96-3.82-1.53-7.45-3.35-11.08-5.45l-2,11.41-2.42,14.01h58.95v.05h198.33c4.87,0,9.62-1.48,13.66-4.2,1.65-1.12,3.18-2.23,4.37-3.34.35.42.74.84,1.17,1.26,4.31,4.2,10.27,6.29,16.3,6.29h63.8-9.44s32.9.01,32.9.01h0s308.96-.01,308.96-.01Z"/>
+            <path class="ar-dot" style="--i:0" d="M645.02,575.99c-7.8,0-14.12,6.32-14.12,14.12s6.32,14.12,14.12,14.12,14.12-6.32,14.12-14.12-6.32-14.12-14.12-14.12Z"/>
+            <path class="ar-dot" style="--i:1" d="M471.09,575.99c-7.8,0-14.12,6.32-14.12,14.12s6.32,14.12,14.12,14.12,14.12-6.32,14.12-14.12-6.32-14.12-14.12-14.12Z"/>
+            <path class="ar-dot" style="--i:2" d="M443.17,575.99c-7.8,0-14.12,6.32-14.12,14.12s6.32,14.12,14.12,14.12,14.12-6.32,14.12-14.12-6.32-14.12-14.12-14.12Z"/>
+          </svg></span></span>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- scroll runway -->
+<div class="runway"></div>
+
+<!-- ============ PAGES 2-6 ============
+     Content still to come. Each one closes with the SAME end mark as the
+     hero — identical markup, identical block — driven by its own scroll
+     progress rather than the painting's lift. -->
+<main class="pages" id="pages">
+    <!-- PAGE TWO — laid out from "page two.psd" (1920x1080, the same frame as
+         the hero). Every measurement is a fraction of the frame WIDTH, so the
+         whole page scales as one piece:
+             badge   108x99 at x197 y172   -> 5.625% wide, 10.26% in, 8.96% down
+             copy    x197..1746, from y321 -> 10.26% left, 9.01% right
+             type    39px on a 48px line   -> 2.031vw / 1.231
+             indent  236px on the first line
+         Justified and hyphenated, as in the PSD. -->
+    <section class="pg pg--studio" id="about">
+      <div class="studio">
+        <svg class="studio__mark" viewBox="375.48 388.48 329.04 303.02" role="img" aria-label="AJID">
+          <path d="M661.21,572.15l-4.37-34.92h-10.9v-68.53c0-15.12-7.41-29.29-19.81-37.93l-48.87-34.01c-7.78-5.42-16.91-8.28-26.4-8.28h-80.17c-9.46,0-18.56,2.85-26.34,8.24l-49,33.99c-12.44,8.63-19.87,22.83-19.87,37.97v142.6c0,15.12,7.41,29.29,19.81,37.93l48.87,34.01c7.78,5.42,16.91,8.28,26.4,8.28h80.18c9.45,0,18.55-2.84,26.32-8.23l48.99-33.95c12.45-8.63,19.89-22.83,19.89-37.98v-43.91c4.68,1.12,9.21,2.41,13.37,3.96.63.24,1.27.48,1.9.74ZM568.52,409.32l48.87,34.01c8.3,5.77,13.25,15.26,13.25,25.37v68.53h-47.19l-48.45-133.45h15.86c6.35,0,12.45,1.92,17.66,5.54ZM390.77,611.29v-142.6c0-10.13,4.97-19.63,13.29-25.4l49-33.99c5.2-3.61,11.3-5.51,17.62-5.51h2.57c9.87,17.56,5.86,41.59-.51,62.02l-.14.38c-.02.07-.04.15-.07.22l-7.69,21.22c-3.79,10.47-7.58,20.95-11.36,31.42h25.32l29.74-82.37,36.31,100.58c-20.89.04-41.82.09-62.73.13v.04h-70.99c2.49,2.12,4.52,4.39,6.25,6.73,17.28,23.95,2.64,62.8-8.83,85.76l-3.97,7.16-.57-.4c-8.3-5.77-13.25-15.26-13.25-25.37ZM630.64,611.35c0,7.67-2.86,14.97-7.86,20.57l-14.58-26.89v.37l-9.5-26.15h-38.59l9.18,25.78.28,54.74c-.09-.02-.19-.08-.27-.1,1.06,4.82-1.9,9.82-5.97,12.63-2.5,1.73-5.35,2.78-8.29,3.6-1.42.2-2.85.31-4.3.31h-78.51c-8.11-.62-15.86-4.99-20.53-11.65-2.3-3.28-3.82-7.08-4.53-11.02l.06-10.17c.15-.81.32-1.61.55-2.4-.2.31-.35.64-.54.96l.21-36.89,15.86-43.63c.09-.13.17-.24.28-.37,33.74.02,67.45-.44,101.17-.15,9.44.07,19.08.11,28.75.46,11.43.4,24.48,1.29,37.12,3.18v46.84Z"/>
+          <path d="M682.88,620.54c-11.95,0-21.64,9.69-21.64,21.64s9.69,21.64,21.64,21.64,21.64-9.69,21.64-21.64-9.69-21.64-21.64-21.64Z"/>
+        </svg>
+        <div class="studio__copy">
+          <p data-ar-html="&lt;span class=&quot;studio__line studio__line--1&quot;&gt;تأسس استوديو عجيد في الدوحة على يد محمد المهندي، ويتعامل مع كل مشروع بوصفه حكاية&lt;/span&gt;&lt;span class=&quot;studio__line studio__line--2&quot;&gt;تتشكل حول الاحتياجات الفردية والهوية وأنماط الحياة.&lt;/span&gt;">
+            <span class="studio__line studio__line--1">Established in Doha by Mohammed Al Mohannadi, Studio Ajid approaches each project as a story</span>
+            <span class="studio__line studio__line--2">shaped around individual needs, identity, and ways of living.</span>
+          </p>
+          <p data-ar-html="&lt;span class=&quot;studio__line studio__line--3&quot;&gt;لا يُنظر إلى الثقافة بوصفها جمالية ثابتة، بل مصدر إلهام حي.&lt;/span&gt;&lt;span class=&quot;studio__line studio__line--4&quot;&gt;وبإعادة قراءتها من منظور معاصر، تُلهم أعمال الاستوديو على اختلاف مقاييسها،&lt;/span&gt;&lt;span class=&quot;studio__line studio__line--5&quot;&gt;من الفراغات إلى القطع، لتنتج تصاميم متجذرة في سياقها دون أن تكون أسيرة التقليد.&lt;/span&gt;">
+            <span class="studio__line studio__line--3">Culture is seen not as a fixed aesthetic, but as a living source of inspiration. Reinterpreted through</span>
+            <span class="studio__line studio__line--4">a contemporary lens, it informs every scale of the studio’s work, from spaces to objects, creating</span>
+            <span class="studio__line studio__line--5">designs that feel rooted in their context without being bound by tradition.</span>
+          </p>
+        </div>
+      </div>
+      <div class="endmark" id="aboutEndmark">
+        <span class="endmark__line"></span>
+        <span class="endmark__logo">
+          <svg class="endmark__svg" viewBox="370.88 396.13 338.27 287.74" role="img" aria-label="AJID">
+          <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+          <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+          <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+          </svg>
+        </span>
+      </div>
+    </section>
+
+    <!-- SECTION THREE — the reel. Four 480x270 placeholders, to be swapped for
+         images. They fall in from above one at a time and settle on the centre
+         line, then the row can be dragged sideways and wraps forever: a card
+         leaving one edge comes back in at the other. reel.js clones the set as
+         many times as the frame needs so the strip can never run out. -->
+    <section class="pg pg--reel" id="work">
+      <div class="reel" id="reel">
+        <a class="reel__card" draggable="false" href="category.html?c=projects">
+          <div class="reel__in">
+            <div class="reel__img"><img src="assets/reel/projects.webp" alt="" draggable="false" decoding="async"></div>
+            <span class="reel__label" data-ar="مشاريع">Projects</span>
+          </div>
+        </a>
+        <a class="reel__card" draggable="false" href="category.html?c=gallery">
+          <div class="reel__in">
+            <div class="reel__img"><img src="assets/reel/gallery.webp" alt="" draggable="false" decoding="async"></div>
+            <span class="reel__label" data-ar="معرض">Gallery</span>
+          </div>
+        </a>
+        <a class="reel__card" draggable="false" href="category.html?c=objects">
+          <div class="reel__in">
+            <div class="reel__img"><img src="assets/reel/objects.webp" alt="" draggable="false" decoding="async"></div>
+            <span class="reel__label" data-ar="قطع">Objects</span>
+          </div>
+        </a>
+        <a class="reel__card" draggable="false" href="#about">
+          <div class="reel__in">
+            <div class="reel__img"><img src="assets/reel/about.webp" alt="" draggable="false" decoding="async"></div>
+            <span class="reel__label" data-ar="نبذة">About</span>
+          </div>
+        </a>
+      </div>
+      <div class="endmark">
+        <span class="endmark__line"></span>
+        <span class="endmark__logo">
+          <svg class="endmark__svg" viewBox="370.88 396.13 338.27 287.74" role="img" aria-label="AJID">
+          <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+          <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+          <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+          </svg>
+        </span>
+      </div>
+    </section>
+
+    <!-- PAGE FOUR — where the studio is. A short block, so it sits in the
+         vertical middle of the page with its rule beneath it, the same way the
+         reel page does. -->
+    <section class="pg pg--info" id="studio">
+      <div class="info">
+        <h2 class="info__title" data-ar-html="الاستوديو"><span class="info__lead">The </span>Studio</h2>
+        <p class="info__block" data-ar-html="&lt;span class=&quot;info__line info__line--1&quot;&gt;حي مشيرب للتصميم&lt;/span&gt;&lt;span class=&quot;info__line info__line--2&quot;&gt;الدوحة، قطر&lt;/span&gt;">
+          <span class="info__line info__line--1">Msheireb Design District</span>
+          <span class="info__line info__line--2">Doha, Qatar</span>
+        </p>
+        <p class="info__block info__line info__line--3" data-ar="بموعد مسبق فقط">By appointment only</p>
+      </div>
+      <div class="endmark">
+        <span class="endmark__line"></span>
+        <span class="endmark__logo">
+          <svg class="endmark__svg" viewBox="370.88 396.13 338.27 287.74" role="img" aria-label="AJID">
+          <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+          <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+          <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+          </svg>
+        </span>
+      </div>
+      <div class="studio-map">
+        <iframe
+          src="https://www.google.com/maps?q=25.2864227,51.5274557&amp;z=17&amp;output=embed"
+          title="Studio Ajid location — Mushaireb, Doha"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+    </section>
+
+    <!-- PAGE FIVE — the last page. Two pattern bands: each slides in from its
+         own side as you scroll down, then keeps drifting for as long as you stay
+         here. The top band travels right, the lower one left, so they pass each
+         other. The artwork tiles seamlessly, so the drift never has a seam. -->
+    <section class="pg pg--patt" id="pattern">
+      <div class="patt patt--a">
+        <div class="patt__slide">
+          <div class="patt__run">
+            <img src="assets/brand/pattern-left.png" alt="AJID pattern">
+            <img src="assets/brand/pattern-left.png" alt="">
+            <img src="assets/brand/pattern-left.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div class="patt patt--b">
+        <div class="patt__slide">
+          <div class="patt__run">
+            <img src="assets/brand/pattern-right.png" alt="">
+            <img src="assets/brand/pattern-right.png" alt="">
+            <img src="assets/brand/pattern-right.png" alt="">
+          </div>
+        </div>
+      </div>
+      <p class="patt__credit">
+        <span class="patt__made" data-ar="صُنع بواسطة استوديو عجيد — جميع الحقوق محفوظة ٢٠٢٦">Made by Studio Ajid rights reserved 2026</span>
+        <a class="patt__link js-lang" href="#" data-en="AR" data-ar-label="EN" aria-label="Switch to Arabic">AR</a>
+        <a class="patt__link" href="contact.html" data-ar="لنتحدث">Lets talk</a>
+      </p>
+      <div class="endmark">
+        <span class="endmark__line"></span>
+        <span class="endmark__logo">
+          <svg class="endmark__svg" viewBox="370.88 396.13 338.27 287.74" role="img" aria-label="AJID">
+          <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+          <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+          <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+          </svg>
+        </span>
+      </div>
+    </section>
+</main>
+
+
+<div class="hud"><b id="hud-state">—</b> · press R to replay</div>
+
+<script src="js/reel.js"></script>
+<script src="js/pattern.js"></script>
+<script src="js/lang.js"></script>
+<script src="js/falcon.js"></script>
+<script src="js/falcon-media.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

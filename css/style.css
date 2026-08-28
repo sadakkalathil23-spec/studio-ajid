@@ -1,0 +1,871 @@
+/* ---- Hayyakum — the AJID brand typeface -----------------------------------
+   Converted straight from the brand-guideline TTFs, all four weights. */
+@font-face{font-family:"Hayyakum";src:url("../assets/fonts/HayyakumAllah-Light.woff2") format("woff2");
+  font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Hayyakum";src:url("../assets/fonts/HayyakumAllah-Regular.woff2") format("woff2");
+  font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Hayyakum";src:url("../assets/fonts/HayyakumAllah-Medium.woff2") format("woff2");
+  font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Hayyakum";src:url("../assets/fonts/HayyakumAllah-Bold.woff2") format("woff2");
+  font-weight:700;font-style:normal;font-display:swap}
+/* metric-matched fallback so the swap does not shift the layout */
+@font-face{font-family:"Hayyakum Fallback";src:local("Georgia"),local("Times New Roman");
+  ascent-override:101%;descent-override:50%;line-gap-override:0%;size-adjust:99%}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto;
+  /* The pages are pushed down by a transform during the hero handoff, and a
+     transform counts toward scrollable overflow — so the document height moves
+     while you scroll. Chrome answers a height change by nudging scrollTop to
+     keep an anchor element still, and that correction is visible as a flick in
+     whatever is on screen. Anchoring off, the height simply changes. */
+  overflow-anchor:none}
+body{background:#120206;color:#f3e8d8;overflow-x:hidden;
+  font-family:"Hayyakum","Hayyakum Fallback",Georgia,"Times New Roman",serif;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit;text-decoration:none}
+
+/* the viewport is pinned; scrolling only drives progress */
+.viewport{position:fixed;inset:0;overflow:hidden;z-index:1}
+/* A fallback only — main.js measures the hero's end mark and sets the real
+   height, so page two comes to rest exactly beneath the rule. */
+.runway{height:calc(100vh + 3.23vw)}
+
+.page{position:absolute;inset:0;will-change:transform}
+
+/* page 1 must not clip the falcon when it flies out */
+.page1{z-index:2;overflow:visible;
+  /* First-paint fallback: the media path is selected asynchronously. Keep the
+     finished plate visible underneath it so page two cannot flash through. */
+  background:#120206 url("../assets/plate.jpg") center 70% / cover no-repeat}
+/* Hidden until the probe picks the vector path. It used to render on load and
+   only get hidden once the async asset check resolved, which flashed the
+   placeholder painting behind the real one for a frame or two. */
+.page1 .scene{position:absolute;inset:0;width:100%;height:100%;display:none;overflow:visible}
+
+/* photoreal path — every layer is full-frame and cover-fitted, so the plate,
+   the alpha video and the scrubbed frames register to each other exactly */
+.media-stage{position:absolute;inset:0;display:none;overflow:hidden}
+
+/* ---- AJID hero lockup + navigation --------------------------------------
+   Sized and placed from the client reference: both wordmarks 46% of the
+   viewport width, sitting inside a 2.5vw gutter rather than bleeding through
+   it; EN opposite the English mark; the section list stacked directly under
+   it at 1.75vw. The marks still slide in from opposite edges and slide apart
+   again on scroll — that entrance is unchanged. */
+:root{
+  --ink-page:#0c152a;               /* brand navy, for type on the white pages */
+  --sand:#d5cfc6;                   /* brand stone beige — the placeholder fill */
+  /* ONE content spine for every page after the hero. page two.psd sets a 1550
+     column in a 1920 frame; centring that gives 185 a side. The PSD itself is
+     26px out (197 left against 171 right), which reads as a slip rather than a
+     decision — centred, the column reads as intended.
+     The hero keeps its own much tighter --pad: its wordmark is a poster meant
+     to bleed to the edge, not body copy, so it is a deliberate exception. */
+  /* One inset for every page after the hero: the same distance top, bottom,
+     left and right. 185 in a 1920 frame, which is page two.psd's 1550 column
+     centred. The hero keeps its own much tighter --pad — its wordmark is a
+     poster meant to bleed to the edge, not body copy. */
+  --gutter:9.635%;                  /* 185 / 1920 */
+  /* ONE speed for every rule and monogram on the site. They all travel the same
+     distance, so matching the scroll window they cross in is what matches their
+     speed. Read by both main.js and reel.js so there is a single source. */
+  /* Widened so the crossing is gentler. The window grows BACKWARDS from the
+     fixed finish, so the rule sets off earlier — partly below the fold — and
+     lands at exactly the same moment, just moving more slowly to get there. */
+  --rule-win:.42;                   /* screen-heights of scroll per crossing */
+  --ease:cubic-bezier(.22,1,.36,1);
+  /* gentler than --ease: no overshoot, very long tail, so the marks
+     glide to rest instead of snapping */
+  --ease-slide:cubic-bezier(.16,.7,.2,1);
+  --pad:clamp(18px,2.5vw,40px);      /* reference: 40px at a 1600 frame */
+  /* The mockup is 1.29 wide; this painting is 16:9. Carrying its 46% of
+     WIDTH across makes the letters read much taller against a short frame
+     (15.6% of frame height against the mockup's 11.5%), so the size is
+     pulled back to sit between the two readings. */
+  --mark-w:38vw;
+  --hero-ink:#ece6dc;
+  --nav-size:clamp(14px,1.75vw,30px);/* reference: 28px at a 1600 frame */
+  /* ENTRANCE — one sequence. The two wordmarks come in TOGETHER, each from its
+     own side; then the section list arrives one word at a time, then EN. Each
+     leg travels at a constant speed and eases out into its final position. */
+  /* Constant speed for most of the travel, then a soft landing at the end of
+     each leg. P1 sits on the diagonal so the start is genuinely linear; P2 is
+     pulled up so the last stretch decelerates into place. */
+  --in-ease:cubic-bezier(.25,.25,.35,1);
+  --in-mark:1.1s;        /* how long each wordmark takes to arrive */
+  --in-word:.55s;        /* how long each list word takes */
+  --t-mark:.3s;                                   /* both marks start here */
+  /* The list does not wait for the marks to land. Residential sets off when the
+     wordmarks are HALFWAY across, so the two overlap; the rest follow it on the
+     same beat. Written as a calc so it stays tied to the marks if their timing
+     is ever changed. */
+  --t-nav:calc(var(--t-mark) + var(--in-mark) / 2);
+  --nav-step:.17s;
+  --t-lang:calc(var(--t-nav) + 5 * var(--nav-step));   /* EN, one beat after the last word */
+
+  /* EXIT — the same order, scrubbed by scroll instead of by the clock. Each
+     element owns a slice of --exit, so the two marks leave together first and
+     the words follow one at a time. Kept inside the first ~0.75 of the scroll
+     so nothing is still leaving once the painting has lifted away. */
+  --o-mark:.28;                                   /* marks: 0 -> .28, together */
+  --o-nav:.24;                                    /* Residential starts here */
+  --o-step:.085;                                  /* then the next, and the next */
+  --o-span:.20;                                   /* how long each word takes */
+  --o-lang:.665;                                  /* EN last, one beat behind */
+}
+
+.hero-ui{position:absolute;inset-inline:0;top:0;height:100%;overflow:hidden;
+  /* The hero lockup does NOT mirror in Arabic. It is a fixed brand composition —
+     AJID hard top-left, the Arabic mark hard bottom-right, the list left and the
+     language switch top-right — and flipping the document threw the switch to
+     the left and the list to the right. The Arabic words still set right-to-left
+     inside it; only the arrangement is pinned. */
+  direction:ltr;
+  pointer-events:none;color:var(--hero-ink);z-index:3;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding-block:clamp(22px,3vw,52px) clamp(14px,1.6vw,28px);
+  padding-inline:var(--pad);
+  /* How far a piece of the lockup travels to be gone. Nothing in here is masked
+     at its own edge any more, so a word has to cross the whole distance to the
+     frame and out the other side of it: its OWN width, plus the inset it sits
+     at, plus a few px so the trailing edge clears rather than kisses the edge.
+     The old fixed percentages were of the element, which meant a long wordmark
+     left properly and a two-letter word like EN moved about 40px and simply sat
+     there in the open. This container's overflow is what finally cuts them off,
+     so they exit at the picture edge instead of vanishing early in mid-air. */
+  --off:calc(100% + var(--pad) + 12px);
+  filter:drop-shadow(0 3px 26px rgba(0,0,0,.85))}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* --- top row: wordmark left, language right ------------------------------ */
+.hero-top{display:flex;align-items:flex-start;justify-content:space-between;gap:24px}
+
+.hero-mark{display:block;font-weight:300}
+.hero-mark--lat{width:var(--mark-w);flex:none}
+.hero-mark--ar{width:var(--mark-w);margin-left:auto}
+.hero-mark svg{width:100%;height:auto;fill:var(--hero-ink);display:block;overflow:visible}
+.hero-mark svg *{transform-box:view-box;transform-origin:center}
+/* the site fills the letterforms with a photo through a clip-path; against
+   this dark painting that texture reads almost black, so use the flat ink */
+.hero-mark svg image{display:none}
+
+/* ENTRANCE — each mark slides in whole at a constant speed, English from the
+   left, Arabic from its own right edge, one after the other.
+
+   The slide sits on an HTML wrapper, NOT on the <svg>. An outer <svg> computes
+   `transform-box: view-box`, so a percentage translate there resolves against
+   the viewBox rather than the on-screen box and moves the mark a fraction of
+   the distance you asked for. On a plain span the percentage means what it
+   says. Nothing masks it locally: it simply starts outside the frame, and
+   .hero-ui's overflow is what hides it until it arrives. */
+.mark-slide{display:block;transform:translateX(calc(-1 * var(--off)));
+  transition:transform var(--in-mark) var(--in-ease) var(--t-mark);will-change:transform}
+.hero-mark--ar .mark-slide{transform:translateX(var(--off))}  /* same moment, other side */
+.hero-mark.is-in .mark-slide{transform:translateX(0)}
+
+/* EXIT — the entrance in reverse, scrubbed by scroll. Both marks leave at the
+   same moment, each back through the edge it came in from; the words follow one
+   at a time. It rides a SEPARATE wrapper from the entrance: two scroll and clock
+   driven transforms on one element would simply overwrite each other. Each mark
+   travels the whole way out of the picture rather than wiping away behind its
+   own box edge - it is a departure, not a dissolve. */
+.hero-mark .mark-out{display:block;will-change:transform;
+  --e:clamp(0, calc(var(--exit,0) / var(--o-mark)), 1)}
+.hero-mark--lat .mark-out{transform:translateX(calc(var(--e) * -1 * var(--off)))}
+.hero-mark--ar  .mark-out{transform:translateX(calc(var(--e) * var(--off)))}
+
+/* neutralise the studio site's per-element animation — the elements just ride
+   along with the slide now */
+.hero-mark .ltr,.hero-mark .ar-dot{transform:none;opacity:1}
+.hero-mark .ar-body{-webkit-clip-path:none;clip-path:none}
+
+/* --- language switch ------------------------------------------------------ */
+.hero-lang{display:block;flex:none;pointer-events:auto;
+  font-size:var(--nav-size);font-weight:300;letter-spacing:.03em;line-height:1.34;
+  margin-top:1.15em;                 /* reference drops EN below the cap line */
+  --e:clamp(0, calc((var(--exit,0) - var(--o-lang)) / var(--o-span)), 1)}
+.hero-lang .w-out{display:block;transform:translateX(calc(var(--e) * var(--off)));
+  will-change:transform}
+.hero-lang a{display:block;transform:translateX(var(--off));
+  transition:transform var(--in-word) var(--in-ease) var(--t-lang)}
+.is-in .hero-lang a{transform:translateX(0)}
+
+/* --- section list --------------------------------------------------------- */
+/* Aligned to the wordmark's own left edge — the SVG viewBox is cropped tight
+   to the glyphs, so the container edge IS the A. */
+.hero-nav{margin-top:calc(100px + clamp(20px,3vw,52px));pointer-events:auto;
+  /* Match the labels used by the Projects / Gallery reel cards. */
+  font-size:clamp(13px,1.15vw,22px);font-weight:300;letter-spacing:.03em;line-height:1.34}
+/* each word owns its own slice of the scroll, so they leave in order */
+.hero-nav__i{display:block;width:max-content;
+  --e:clamp(0, calc((var(--exit,0) - (var(--o-nav) + var(--i,0) * var(--o-step)))
+                    / var(--o-span)), 1)}
+.hero-nav__i .w-out{display:block;transform:translateX(calc(var(--e) * -1 * var(--off)));
+  will-change:transform}
+/* the social link sits a clear line below the sections */
+.hero-nav__i--social{margin-top:1.1em}
+/* Each line wipes in behind its own edge on a stagger, in the same language as
+   the wordmarks — a slide, never a fade. */
+.hero-nav__i a{display:block;transform:translateX(calc(-1 * var(--off)));
+  transition:transform var(--in-word) var(--in-ease)
+             calc(var(--t-nav) + var(--i) * var(--nav-step));
+  position:relative;padding-block:.06em}
+.is-in .hero-nav__i a{transform:translateX(0)}
+/* underline on hover, as on the studio site */
+.hero-nav__i a::after{content:"";position:absolute;left:0;right:0;bottom:.06em;height:1px;
+  background:currentColor;transform:scaleX(0);transform-origin:left center;
+  transition:transform .5s var(--ease)}
+.hero-nav__i a:hover::after{transform:scaleX(1)}
+
+@media (max-width:860px){
+  :root{--mark-w:66vw}
+  .hero-mark--ar{width:82vw}
+}
+
+/* page 2 onward is white */
+.page2{z-index:1;background:#ffffff}
+
+/* ---- END MARK -----------------------------------------------------------
+   The rule and the AJID monogram, taken from line.psd. That file is 1920x1080,
+   the same frame as the painting, so its pixels map 1:1 at a 1920 viewport and
+   are carried across as fractions of the width to hold at any other size:
+
+       rule          1px tall, full width
+       monogram      27 x 23, its right edge 17px in from the frame edge,
+                     its top 13px below the rule
+
+   It sits INSIDE page 1, 25px below the image, so it rides up with the painting
+   rather than reading as page 2 furniture. Page 1 is overflow:visible and sits
+   above page 2, so it draws onto the white while still belonging to the image.
+
+   Its own block, so the same close can be dropped at the end of any later page:
+   drop in the markup and hand it a --p that runs 0 -> 1. On page 1 that is
+   --lift, the painting's own travel, which is also what brings it into view;
+   another page can drive it from anything else without touching this. */
+.endmark{position:absolute;left:0;right:0;top:100%;
+  backface-visibility:hidden;
+  /* How much of the rule is already drawn when it first appears. It only has a
+     few hundred px of scroll between clearing the fold and finishing, so the
+     shorter the remaining travel, the slower and smoother the crossing. At .5 it
+     had to cover half the frame in that window and moved about 4px of line per
+     px of scroll, which reads as a dash however well it is eased. */
+  --rule-from:.72;
+  /* The gap belongs to the ARTWORK, so it is a fraction of the frame, not a
+     fixed pixel count: 30/1920, which is the 25px it reads at this viewport.
+     A margin percentage resolves against the containing block's WIDTH, so this
+     tracks the painting at every size and the spacing never drifts out of
+     proportion the way a hard 25px would on a larger screen. */
+  margin-top:1.5625%;
+  transform:translateY(calc(var(--art-shift,0px) + var(--mark-trail,0px))) translateZ(0);
+  /* The mark hangs below the rule on absolute position, so the block would
+     otherwise be one pixel tall. Reserving its height lets a page sit the whole
+     thing on its bottom edge instead of just the rule. */
+  padding-bottom:calc(var(--logo-gap) + var(--logo-h));
+  pointer-events:none;z-index:4;
+  /* Each page hands the block its own 0 -> 1. Nothing here knows about page 1. */
+  --p:0;
+  /* Percentages of THIS block, not vw: vw counts the scrollbar, which would
+     push the mark a few px off the position the PSD specifies. */
+  --line-h:max(1px, calc(100vw / 1920));
+  --logo-w:max(16px, 1.40625%);      /* 27 / 1920 */
+  --logo-right:0.8854%;              /* 17 / 1920 */
+  --logo-gap:0.677vw;                /* 13 / 1920, on a gap too small to skew */
+  --logo-h:calc(var(--logo-w) / 1.1756);   /* the mark's measured ink aspect */
+  --ink:#0c152a}                       /* the brand navy, straight off the logo */
+
+/* A left-to-right run that is ALREADY UNDER WAY by the time you see it. The
+   left end is home from the outset and the right end is at the centre, so the
+   moment the rule clears the fold it is a half line still travelling; from
+   there the right end carries on to the frame edge. Hence 0.5 -> 1 from a left
+   origin, not 0 -> 1 from the middle: growing out of the centre would read as
+   a line being drawn from nothing, not one caught mid-travel. */
+.endmark__line{display:block;height:var(--line-h);background:var(--ink);
+  transform-origin:0 50%;
+  transform:scaleX(calc(var(--rule-from,.5) + (1 - var(--rule-from,.5)) * var(--p)));
+  will-change:transform}
+
+/* The monogram waits until the line's leading edge has reached it, then runs
+   the last stretch in with it and fades up, landing on the PSD position.
+   --logo-travel and --logo-in are both set in main.js from one constant, so
+   the run always takes exactly the time the line's edge needs to cover that
+   same distance — the two move at one speed whatever the screen. */
+.endmark__logo{position:absolute;inset-inline-end:var(--logo-right);
+  top:calc(var(--line-h) + var(--logo-gap));width:var(--logo-w);
+  --lp:clamp(0, calc((var(--p) - var(--logo-in,.9375)) / (1 - var(--logo-in,.9375))), 1);
+  opacity:var(--lp);
+  transform:translateX(calc((1 - var(--lp)) * -1 * var(--logo-travel,50px)));
+  will-change:opacity,transform}
+.endmark__svg{display:block;width:100%;height:auto;fill:var(--ink)}
+
+/* Exact About-page end mark copied onto the front artwork, 30px below it. */
+#endmark{margin-top:30px;overflow:hidden}
+
+/* Page one drives the generic mark progress from the painting lift. */
+.page1 .endmark{--p:var(--mark-p,0)}
+
+/* ---- PAGES 2-6 ----------------------------------------------------------
+   The same end mark closes each one. Identical markup and identical block —
+   only the progress differs: here it comes from the page's own scroll position
+   (set in main.js) rather than from the painting. */
+.pages{position:relative;z-index:2;background:#fff;color:var(--ink-page);
+  transform:translateY(var(--pages-shift,0px));will-change:transform}
+.pg{position:relative;
+  /* svh, not vh. On iOS Safari 100vh is the LARGE viewport - the height the
+     page would have if the URL bar were hidden - so a full-screen section is
+     always taller than what you can actually see, and it resizes under your
+     finger as the bar slides away. svh is the small viewport: it fits on load
+     and never changes. The vh line stays first as the fallback for browsers
+     that do not know svh; they simply ignore the second. */
+  min-height:100vh;
+  min-height:100svh;
+  /* Vertical inset only. The horizontal one sits on the content, so the end
+     mark's rule can still run the full width of the frame — putting it here
+     would inset the rule too, and clawing that back with negative margins does
+     NOT work: a margin percentage resolves against the CONTENT box, not the
+     frame, so the rule came up ~30px short each side. */
+  padding-block:var(--gutter);
+  display:flex;flex-direction:column}
+.pg__inner{padding-inline:var(--gutter)}
+.pg__title{font-weight:300;letter-spacing:.01em;
+  font-size:clamp(28px,3.6vw,64px);line-height:1.1}
+ /* In flow at the foot of the page: margin-top:auto pushes it down and soaks
+    up whatever height the copy did not use, so the inset BELOW it stays put.
+    It stays position:relative because the monogram is absolutely positioned
+    against it — going static handed the monogram to .pg and threw it to the top
+    of the page. No side margins needed: .pg has no horizontal padding, so the
+    rule already runs the full width of the frame, as the PSD has it. */
+.pg .endmark{position:relative;top:auto;bottom:auto;margin-top:auto;transform:none}
+/* on the reel and studio pages the rule follows the content immediately,
+   rather than being pushed to the bottom of the section */
+.pg--studio .endmark{margin-top:0}
+
+/* EVERY CLOSE — Eladio Dieste homepage timing and motion.
+   Each divider is a one-shot in-view entrance: zero width to full width from
+   the left edge. Every A. uses the same entrance as the reference Español
+   link: hidden at +50%, then a short horizontal landing with no scale. */
+.endmark{overflow:hidden}
+.endmark .endmark__line{
+  transform:scaleX(0);
+  transform-origin:0 50%;
+  transition:transform 1.4s cubic-bezier(.19,1,.22,1)}
+.endmark .endmark__logo{
+  opacity:0;
+  visibility:hidden;
+  transform:translate3d(50%,0,0);
+  transition:transform .3s cubic-bezier(.33,0,0,1) .4s,
+             opacity .3s cubic-bezier(.33,0,0,1) .4s,
+             visibility 0s linear .4s}
+.endmark.is-inview .endmark__line{transform:scaleX(1)}
+.endmark.is-inview .endmark__logo{
+  opacity:1;
+  visibility:visible;
+  transform:translate3d(0,0,0)}
+
+/* ---- PAGE FOUR — the studio's address -----------------------------------
+   A short block, so it centres in the page with its rule beneath it, the same
+   treatment as the reel. Type matches page two's body: 39 on a 48 line at a
+   1920 frame, so every page reads as one voice. */
+.pg--info{color:var(--ink-page);padding-bottom:0;min-height:0;
+  /* "The Studio" starts a measured 100px below page three's rule. Same
+     construction as the reel: the page above ends on its end-mark box, which
+     reserves the monogram's height under the line, so that much comes off the
+     inset here and what is left is 100px of clear space at any width. Centred,
+     this could not hold a fixed distance to the page above - the slack over it
+     was half of whatever the section had spare. */
+  --logo-w:max(16px, 1.40625%);            /* 27 / 1920 */
+  --logo-gap:0.677vw;                      /* 13 / 1920 */
+  --logo-h:calc(var(--logo-w) / 1.1756);   /* the mark's measured ink aspect */
+  padding-top:calc(100px - var(--logo-gap) - var(--logo-h));
+  justify-content:flex-start}
+ /* Left edge set to the reference frame: "The Studio" starts at 213 of 1920,
+    not on the site's 185 spine. This page is deliberately inset further than
+    the others because that is how it was drawn. */
+.info{margin-inline-start:11.094%;margin-inline-end:var(--gutter);  /* 213/1920 */
+  font-size:25px;line-height:1.142;font-weight:300;letter-spacing:.01em}
+/* Eight pixels smaller than the previous visible 43px heading at this layout,
+   with a regular rather than medium face. */
+.info__title{font-size:35px;font-weight:400;letter-spacing:.01em;line-height:1.25}
+/* "Studio", "Msheireb" and "Doha" all begin on one line. Left to the natural
+   width of "The " that alignment is incidental — it drifts with the font, the
+   viewport and the rendering. Giving "The " a fixed box exactly as wide as the
+   address indent makes it structural, so the three can never fall out of line.
+   2.589em is stated against the 25px BODY size; the 35px title is 140% of that,
+   hence the division. */
+.info__lead{display:inline-block;width:calc(2.589em / 1.4)}
+ /* No blanket line between blocks. A full 1.23em on top of the natural leading
+    put 110 between the heading and the address where the reference has 61, and
+    97 before the last line where it has 69. The address simply follows the
+    heading; only the closing line is set apart. */
+.info__block{margin-top:0}
+/* Stepped indents, each block starting further right than the one above.
+   Measured off the reference frame and stated in em against the body size, so
+   the stagger holds its shape at any viewport instead of drifting apart. */
+.info__block:nth-of-type(1){margin-inline-start:2.589em;margin-top:.127em}  /* step 102 */
+.info__block:nth-of-type(2){margin-inline-start:6.497em;margin-top:.533em}  /* step 256 */
+.info__line{display:block}
+.info__title,.info__line{
+  transform:translate3d(calc(-100% - var(--gutter)),0,0);
+  transition:transform 1s var(--in-ease);
+  will-change:transform}
+.info__title{transition-delay:0s}
+.info__line--1{transition-delay:.1s}
+.info__line--2{transition-delay:.2s}
+.info__line--3{transition-delay:.3s}
+.info.is-inview .info__title,
+.info.is-inview .info__line{transform:translate3d(0,0,0)}
+/* 30 between the last line and the rule, as on the reel page */
+.pg--info .endmark{margin-top:1.5625%;
+  /* This page is centred and short, so its rule reaches the screen much sooner
+     than page two's — on the shared timing it had finished 150px before the
+     section even filled the screen. Landing it later brings it back to where
+     the content actually settles. */
+  --mark-end:.385}
+.studio-map{width:100%;height:clamp(360px,35.3vw,720px);
+  margin-top:0;overflow:hidden;background:#e9edf0}
+.studio-map iframe{display:block;width:100%;height:100%;border:0}
+
+/* ---- PAGE FIVE — the pattern bands --------------------------------------
+   Two strips of the brand pattern. Each slides in from its own side as the page
+   arrives, then keeps drifting for as long as you stay — the top band to the
+   right, the lower one to the left, so they cross.
+
+   The drift is endless and seam-free because the artwork tiles: the PNG's left
+   and right edges match on every row, so enough copies laid end to end and
+   wrapped by one tile width run forever with nothing to see at the join.
+
+   Two nested transforms, as elsewhere, so the scroll entrance and the endless
+   drift never overwrite one another:
+     .patt__slide  the entrance, driven by scroll
+     .patt__run    the drift, driven by the clock */
+.pg--patt{color:var(--ink-page);justify-content:flex-start;
+  min-height:0;padding-top:0;padding-bottom:0;background:#fff}
+.patt{position:relative;width:100%;overflow:hidden;
+  direction:ltr;background:#748796}            /* colour only behind pattern */
+.patt + .patt{margin-top:-1px}                 /* overlap shared edge: no 1px seam */
+/* The images sit in a flex row, so any whitespace between the <img> tags would
+   otherwise show as a hairline; block display and zero line-height remove it. */
+.patt{font-size:0;line-height:0}
+.patt__slide{display:block;will-change:transform;
+  transition:transform 1.1s cubic-bezier(.25,.25,.35,1) .3s}
+/* Match the hero AJID entrance: both bands arrive together, each from its own
+   edge. The section class is added once and is never removed before refresh. */
+.patt--a .patt__slide{transform:translate3d(-100%,0,0)}
+.patt--b .patt__slide{transform:translate3d(100%,0,0)}
+.pg--patt.is-pattern-in .patt__slide{transform:translate3d(0,0,0)}
+.patt__run{display:flex;width:max-content;will-change:transform}
+/* Half the previous size. One tile is now about 0.65 of a screen wide, so more
+   copies are needed to cover the frame — pattern.js counts them from the
+   measured tile width and clones to suit, so nothing here has to change. */
+.patt__run img{display:block;height:12.5vw;width:auto;flex:none}
+/* 30 below the pattern, on the site's spine like every other line of type.
+   Sized at 1.95x the original: 3x, halved, then up 130%. The whole clamp is
+   scaled, not just the middle value, so floor and ceiling keep proportion. */
+.patt__credit{margin-top:1.5625%;              /* 30 / 1920 */
+  /* The credit keeps the site's left margin, but the row runs almost to the
+     right edge so "Lets talk" can sit hard against it. */
+  margin-inline-start:var(--gutter);margin-inline-end:.52%;  /* 10 / 1920 */
+  /* One row: credit at the left, then AR and the contact link grouped right.
+     The gap is a percentage of this block's own width (1725 at a 1920 frame),
+     which makes it 150 there and holds its proportion elsewhere. */
+  display:flex;align-items:baseline;flex-wrap:wrap;
+  column-gap:8.6957%;                          /* 150 / 1725 */
+  font-size:clamp(13px,1.15vw,22px);font-weight:300;letter-spacing:.03em;
+  line-height:1.4;color:var(--ink-page)}
+/* the two links pick up the same underline-on-hover as the hero's list */
+.patt__link{position:relative;white-space:nowrap;pointer-events:auto}
+/* The auto margin sits on AR, so AR and "Lets talk" travel to the right edge
+   TOGETHER with only their 150 gap between them. Putting it on "Lets talk"
+   instead would have stranded AR back beside the credit. */
+.patt__credit .patt__link:first-of-type{margin-inline-start:auto}
+.patt__link::after{content:"";position:absolute;left:0;right:0;bottom:-.12em;height:1px;
+  background:currentColor;transform:scaleX(0);transform-origin:left center;
+  transition:transform .5s var(--ease)}
+.patt__link:hover::after{transform:scaleX(1)}
+
+/* The last rule and monogram on the site sit 30px higher than they did, hard
+   against the credit line rather than a clear 30 below it. The bottom margin is
+   untouched, so the block moves up as a unit and the air under the monogram
+   grows by the same 30 - the page's overall height does not change. */
+.pg--patt .endmark{margin-top:0;margin-bottom:30px}
+
+@media (prefers-reduced-motion:reduce){
+  .patt__slide{transition:none!important;transform:none!important}
+  .patt__run{transform:none!important}
+}
+/* 30 between the cards and the rule; the two then centre together as one block */
+.pg--reel .endmark{margin-top:1.5625%}
+
+/* ---- SECTION THREE — the reel -------------------------------------------
+   Four 480x270 placeholders, sized as fractions of the frame like everything
+   else: 480/1920 is a quarter of the width, and 16:9 gives the height. Four of
+   them plus their gaps are wider than the frame on purpose — the row is meant
+   to be dragged, so it has to run off both edges.
+
+   The strip is full-bleed while the FIRST card still starts on the site's
+   spine, so the reel lines up with the copy above it at rest but cards can
+   still travel past the edges. reel.js owns the horizontal position. */
+/* Section three starts at page two's RULE, not below its end mark: pulled up by
+   the page's bottom inset plus the end-mark block, less the rule itself. The
+   reel's overflow:hidden then puts the mask edge exactly on that line, so the
+   cards are revealed from underneath it rather than appearing in clear space.
+   It sits below page two so the rule and monogram still read over the top. */
+.pg--reel{color:var(--ink-page);z-index:1;
+  /* No negative pull any more. It existed so this section's top would sit on
+     page two's rule, which the ORIGINAL reveal needed — the cards dropped out
+     from behind that line. The reveal is a clip wipe now, so the pull did
+     nothing except drag the section box 221px above the screen, which threw the
+     vertical centring off by half that on every viewport. */
+  /* A full screen again, with the cards and their rule sitting in the vertical
+     middle of it rather than pinned to the top with all the space below. */
+  /* Content height. The section used to hold a full screen, which after the
+     cards moved up left 631px of white below them and pushed page four that
+     much further away; the distance from this page's rule to the next one is a
+     designed 100px, set on .pg--info, and a floor of 100vh here would have been
+     added on top of it. Page two already closes the same way. */
+  min-height:0;
+  /* No bottom inset either - same reason as page two: one designed gap, owned
+     by the page below, rather than two insets that happen to sum to it. */
+  padding-bottom:0;
+  /* Top-anchored, NOT centred. The cards sit a measured 100px below page two's
+     rule, and a centred block cannot hold a fixed distance to anything: the
+     slack above it is half of whatever the section has spare, so the gap grew
+     and shrank with the window height (503px at 918 tall). Anchoring the block
+     to the top makes the padding below the only thing that varies. */
+  /* 100px from the RULE, not from the section edge. .pg--studio now ends on the
+     end mark's box, and that box reserves the monogram's height below the line
+     with the same two values repeated here - so subtracting them leaves exactly
+     100px of clear space however wide the screen is. They have to be restated
+     because .pg--reel is not inside .endmark and so does not inherit them. */
+  --logo-w:max(16px, 1.40625%);            /* 27 / 1920 */
+  --logo-gap:0.677vw;                      /* 13 / 1920 */
+  --logo-h:calc(var(--logo-w) / 1.1756);   /* the mark's measured ink aspect */
+  padding-top:calc(100px - var(--logo-gap) - var(--logo-h));
+  justify-content:flex-start}
+ /* height is set by reel.js — the drop, the card and the 30px tail — so the
+    rule lands directly beneath the cards */
+.reel{position:relative;flex:none;overflow:hidden;
+  /* Pinned left-to-right. reel.js lays the cards out in absolute pixels measured
+     from the left edge, and flipping the document reverses both the flex order
+     and the origin those numbers assume — the row runs backwards and the wrap
+     lands in the wrong place. The labels still set right-to-left inside. */
+  direction:ltr;
+  /* 474 x 4 = 1896, plus three 8px gaps = 1920 exactly: the row fills the frame
+     edge to edge with air between the cards, rather than four 480s touching. */
+  --reel-gap:0.41667%;                   /* 8 / 1920 */
+  touch-action:pan-y;                    /* let the page scroll, we take the X */
+  cursor:grab}
+.reel.is-dragging{cursor:grabbing}
+
+/* Two nested transforms so they never fight: the card carries the horizontal
+   loop, the inner element carries the drop-in. */
+.reel__card{position:absolute;top:0;width:24.6875%;             /* 474 / 1920 */
+  /* a link now: three of them open their own index page, About goes back up to
+     page two. Inheriting the colour keeps it from turning into browser blue. */
+  display:block;color:inherit;text-decoration:none;
+  /* Pressing a link and moving starts the browser's own drag-and-drop, which
+     fires pointercancel and kills the pan. Selecting the label text fights it
+     too. Neither is wanted here: sideways on this row means pan the row. */
+  -webkit-user-drag:none;user-select:none;-webkit-user-select:none;
+  will-change:transform}
+.reel__card:focus-visible{outline:2px solid var(--ink-page);outline-offset:4px}
+
+/* THE REVEAL — a clipped wipe, not a slide.
+   --hide runs 1 (hidden) to 0 (shown) and is set per card by reel.js from a
+   scroll-driven high-water mark. It can only advance, so every image reveals
+   once and stays open until the document is refreshed.
+     .reel__in   the mask: opens top-down
+     .reel__img  counter-slides down inside it as it opens, which is what gives
+                 the reveal depth instead of it looking like a blind going up
+   The label is inside the mask but OUTSIDE the parallax, so it arrives with the
+   card rather than drifting against it. */
+.reel__in{position:relative;display:block;width:100%;aspect-ratio:16/9;
+  overflow:hidden;
+  -webkit-clip-path:inset(0 0 calc(var(--hide,1) * 100%) 0);
+  clip-path:inset(0 0 calc(var(--hide,1) * 100%) 0)}
+.reel__img{position:absolute;inset:0;background:var(--sand,#d5cfc6);
+  transform:translateY(calc(var(--hide,1) * -30%));
+  will-change:transform}
+/* The picture fills the holder exactly and is cropped to it rather than
+   squashed; the sand behind it stays as the colour a card shows before the
+   image decodes. Full height, not oversized: .reel__img counter-slides up by
+   30% during the reveal, but the mask is clipping the bottom by 100% over the
+   same run, so it is always hiding more than the picture has vacated and the
+   bottom edge is never exposed. An oversized picture would only crop the render
+   at rest for nothing.
+     pointer-events:none matters more than it looks: the card is a link whose
+   native drag had to be disabled by hand so the row can be panned sideways, and
+   an image inside it is a second drag source that would undo that. Taking it
+   out of hit-testing hands every press straight to the card. */
+.reel__img img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;display:block;
+  -webkit-user-drag:none;pointer-events:none}
+.reel__label{position:absolute;inset-inline-start:5%;bottom:5%;
+  font-weight:300;letter-spacing:.03em;
+  font-size:clamp(13px,1.15vw,22px);color:var(--ink-page)}
+
+@media (prefers-reduced-motion:reduce){
+  .reel__in{-webkit-clip-path:none;clip-path:none}
+  .reel__img{transform:none}
+}
+
+/* ---- PAGE TWO — the studio statement ------------------------------------
+   Measured off "page two.psd", which is 1920x1080 like the hero, so its pixels
+   map 1:1 at a 1920 frame. Every value is a percentage of the frame WIDTH
+   (padding percentages resolve against width, which is what keeps the block in
+   proportion) so the page scales as one piece rather than drifting apart. */
+/* Page two paints ABOVE the reel below it, so its rule and monogram stay
+   visible while section three slides up underneath to meet them. */
+.pg--studio{color:var(--ink-page);z-index:2;
+  /* 100px from page one's rule to the top of this page's monogram - the same
+     number, measured the same way, as the gap from this page's own rule down to
+     the reel. It used to be a percentage of the frame, so it read 96px on a
+     1280 screen, 129 here and 182 on a 1920 monitor while the gap below stayed
+     at 100: the two never matched except by accident at one window size.
+
+     Page one ends on its end-mark BOX, which reserves the monogram's height
+     below the rule, so that much comes off this inset and what is left is the
+     100. Same two values as .pg--reel and .pg--info, restated because none of
+     these pages sit inside .endmark to inherit them. */
+  --logo-w:max(16px, 1.40625%);            /* 27 / 1920 */
+  --logo-gap:0.677vw;                      /* 13 / 1920 */
+  --logo-h:calc(var(--logo-w) / 1.1756);   /* the mark's measured ink aspect */
+  padding-top:calc(100px - var(--logo-gap) - var(--logo-h));
+  /* No bottom inset. The distance from the About rule to the reel's first card
+     is a DESIGNED 100px, set once on .pg--reel below; leaving the gutter here
+     as well would have meant two separate insets adding up to it, and neither
+     of them would have been the number. The end mark's monogram is absolute and
+     hangs 30px past the section edge into the reel's space - it still paints
+     over, this page being z-index 2. */
+  padding-bottom:0;
+  /* Content height, like the reel page. The rule belongs just under the copy
+     now, so there is nothing left to stretch to the foot of a viewport — left
+     full-height it would strand the rule with a screen of white beneath it. */
+  min-height:0}
+ /* The gap above the rule is a DESIGNED value, not leftover space. Relying on
+    the auto-margin alone gave 80px on a tall window and 8px on a 1080 screen —
+    the copy nearly touching the line — because a page taller than the viewport
+    leaves the flex nothing to distribute. page two.psd sets it at 91 in a 1920
+    frame, so that is the floor; the auto-margin still adds more when a taller
+    window has slack to give. */
+ /* 30 between the last line of copy and the rule, matching the reel page. */
+.studio{padding-inline:var(--gutter);padding-bottom:1.5625%}   /* 30 / 1920 */
+
+ /* Percentages on these two resolve against .studio's CONTENT box (1550 at a
+    1920 frame), not the frame itself — the padding above already ate the
+    margins. So they are stated over 1550, not over 1920, or the badge comes
+    out a fifth too small and the copy rides up to meet it. */
+.studio__mark{display:block;width:4.1808%;height:auto;  /* 40% smaller */
+  /* The paths carry no fill of their own, so this is what makes the badge the
+     brand navy. Left to itself an SVG path paints black — and as an <img> it
+     could not have inherited this at all, which is why it is inlined. */
+  fill:var(--ink-page)}
+
+/* 50px between the badge and the first line of copy, at a 1920 frame */
+.studio__copy{margin-top:3.226%;                       /* 50 / 1550 */
+  font-size:25px;
+  line-height:1.2308;                      /* 48 / 39 */
+  font-weight:300;
+  text-align:justify;
+  -webkit-hyphens:auto;hyphens:auto;       /* the PSD breaks words; so does this */
+  text-wrap:pretty}
+.studio__copy p + p{margin-top:1.2308em}   /* one line of leading between paras */
+.studio__copy p:first-child{text-indent:0}
+
+/* ABOUT — the badge and all five visible copy lines enter from beyond the left
+   edge, one beat at a time, using the hero navigation's speed and easing.
+   main.js adds .is-inview once and never removes it, so the reveal cannot
+   reverse or replay while scrolling. */
+/* The copy sets as two flowing paragraphs, not five fixed lines. Each span was
+   display:block, which froze the breaks exactly where the layout was drawn: at
+   25px against a measure that keeps scaling with the window, that left the long
+   lines stopping 400-790px short of the right inset while the left stayed on
+   150. Set inline, the words run up to fill each line by themselves, and they
+   go on doing it at every width instead of at the one it was drawn at.
+   text-align:justify above then pulls both edges flush; only the closing line of
+   each paragraph is short, which is how a paragraph is meant to end.
+     The spans stay in the markup - they carry the Arabic through lang.js - and
+   the entrance moves onto the paragraphs, so the cascade is badge, first
+   paragraph, second paragraph on the same tenth-of-a-second beat. */
+.studio__line{display:inline}
+.studio__mark,.studio__copy p{
+  transform:translate3d(calc(-100% - var(--gutter)),0,0);
+  transition:transform 1s var(--in-ease);
+  will-change:transform}
+.studio__mark{transition-delay:0s}
+.studio__copy p:nth-of-type(1){transition-delay:.1s}
+.studio__copy p:nth-of-type(2){transition-delay:.2s}
+.studio.is-inview .studio__mark,
+.studio.is-inview .studio__copy p{transform:translate3d(0,0,0)}
+
+@media (max-width:860px){
+  /* the frame is no longer 16:9, so hold the type at a readable size rather
+     than letting it collapse with the viewport */
+  .studio{padding:12% 8% 0 8%}
+  .studio__mark{width:9.6%}
+  .studio__copy{font-size:25px;margin-top:6%;
+    /* Ragged right, not justified. Justification needs a wide measure to hide
+       the stretching between words; on a 390px column there are only four or
+       five words a line, so the spare space lands in a handful of gaps and the
+       copy fills with rivers - 'by            tradition.' On a narrow measure a
+       ragged edge reads better than an even one. start, not left, so Arabic
+       still sets from the right. */
+    text-align:start}
+  .studio__copy p:first-child{text-indent:0}
+
+  /* THE REEL. A quarter of the frame is a quarter of 1920 on a desktop and a
+     quarter of 390 on a phone - the cards came out 96x54, smaller than their
+     own labels, which then ran off the edge. The row is a swipe on touch, so
+     it does not need four cards in shot: a little under half the frame shows
+     one card and the edge of the next, which is what tells you it moves. */
+  .reel__card{width:46%}
+
+  /* THE ADDRESS. The stepped indents are measured off the 1920 layout - 102
+     and 256 - and on a phone they pushed 'By appointment only' so far right it
+     broke into three stacked words. The steps are a wide-frame idea; on a
+     narrow one the three blocks simply stack on the spine. */
+  .info{margin-inline-start:8%;margin-inline-end:8%}
+  .info__block:nth-of-type(1),
+  .info__block:nth-of-type(2){margin-inline-start:0}
+
+  /* TOUCH TARGETS. These are 19px tall, set by the type alone, which is well
+     under the 44px a fingertip needs; the padding is invisible but makes each
+     link reachable. Only on touch-sized screens - the desktop composition is
+     unchanged. */
+  .hero-nav__i a{padding-block:.75em}
+  .hero-nav{margin-top:calc(60px + clamp(20px,3vw,52px))}
+}
+
+@media (max-width:560px){
+  /* one card and a clear slice of the next */
+  .reel__card{width:72%}
+}
+
+/* debug readout - add ?debug to the URL to show it */
+.hud{display:none;position:fixed;right:14px;bottom:12px;z-index:99;
+     font:11px/1 ui-monospace,monospace;color:#f3e8d8;opacity:.35;
+     letter-spacing:.09em;pointer-events:none}
+.debug .hud{display:block}
+.hud b{color:#e8b93c;font-weight:400}
+
+/* ?ready, and print: the finished hero with no entrance to sit through */
+.settled .mark-slide,.settled .hero-nav__i a,.settled .hero-lang a,
+.settled .studio__mark,.settled .studio__copy p,
+.settled .info__title,.settled .info__line{
+  transition:none!important;transform:translateX(0)!important}
+.settled .endmark .endmark__line{transition:none!important;transform:scaleX(1)!important}
+.settled .endmark .endmark__logo{transition:none!important;opacity:1!important;visibility:visible!important;transform:none!important}
+
+@media print{
+  .mark-slide,.mark-out,.w-out,.hero-nav__i a,.hero-lang a,
+  .studio__mark,.studio__copy p,.info__title,.info__line{
+    transition:none!important;transform:none!important}
+  .endmark .endmark__line{transition:none!important;transform:scaleX(1)!important}
+  .endmark .endmark__logo{transition:none!important;opacity:1!important;visibility:visible!important;transform:none!important}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .mark-slide,.hero-nav__i a,.hero-lang a,
+  .studio__mark,.studio__copy p,.info__title,.info__line{transform:none!important}
+  .endmark .endmark__line{transition:none;transform:scaleX(1)}
+  .endmark .endmark__logo{transition:none;opacity:1;visibility:visible;transform:none}
+}
+
+
+/* ==========================================================================
+   ARABIC — right to left
+   The text swaps are handled in lang.js; everything below is what `dir` alone
+   cannot fix. Transforms and transform-origins are physical, so anything that
+   travels sideways has to be mirrored by hand or it runs the wrong way.
+   ========================================================================== */
+[dir="rtl"] .endmark .endmark__line{transform-origin:100% 50%} /* rule grows right to left */
+[dir="rtl"] .endmark .endmark__logo{transform:translate3d(-50%,0,0)}
+[dir="rtl"] .endmark.is-inview .endmark__logo{transform:translate3d(0,0,0)}
+
+/* justified Arabic sets better ragged; keep the measure but drop the stretching */
+[dir="rtl"] .studio__copy{text-align:right}
+[dir="rtl"] .studio__copy p:first-child{text-indent:0}
+
+
+/* ---- CATEGORY PAGES — Projects / Gallery / Objects ------------------------
+   Behind three of the four reel cards. One stylesheet block and one template
+   serve all three; only the strings differ, and those come from category.js.
+
+   Same spine as every other page (--gutter a side), same type, and the same
+   rule and monogram closing it, so arriving here does not feel like leaving
+   the site. The holders are the reel's sand rectangles at the same 16:9, laid
+   three across: 1550 of content, two gaps of 8, is 511 a cell.
+
+   Unlike the hero, the reel and the pattern bands, nothing here is positioned
+   in script-computed pixels — it is an ordinary grid — so it is left free to
+   mirror in Arabic, which is what it should do. */
+body.body--cat{background:#fff;color:var(--ink-page)}
+.pg--cat{color:var(--ink-page);justify-content:flex-start}
+
+.cat__bar{display:flex;align-items:center;justify-content:space-between;
+  margin-inline:var(--gutter);
+  font-weight:300;letter-spacing:.03em;
+  font-size:clamp(13px,1.15vw,22px)}
+.cat__home{display:inline-flex;align-items:center;gap:.7em;
+  color:inherit;text-decoration:none}
+.cat__homemark{display:block;width:1.6em;height:auto;fill:var(--ink-page)}
+.cat__lang:hover{text-decoration:underline;
+  text-underline-offset:.25em}
+.cat__lang{color:inherit;text-decoration:none}
+.cat__home:focus-visible,.cat__lang:focus-visible{outline:2px solid var(--ink-page);
+  outline-offset:4px}
+
+/* Matches page four's "The Studio": the body size at 142%, medium weight, so
+   every heading on the site is set the same way. */
+.cat__title{margin-inline:var(--gutter);margin-top:2.6%;
+  font-weight:500;line-height:1.25;letter-spacing:.005em;
+  font-size:clamp(24px,2.884vw,55px)}
+
+.cat__grid{margin-inline:var(--gutter);margin-top:2.6%;margin-bottom:3.125%;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  column-gap:0.4167vw;                   /* 8 / 1920, the reel's own gap */
+  row-gap:3.125vw}                       /* 60 / 1920 */
+.cat__cell{margin:0}
+
+/* The same reveal as the reel: a mask opening top-down with the picture
+   counter-sliding inside it, one cell after another. On the reel that is tied
+   to scroll because the cards are met mid-page; here the grid is what you have
+   arrived at, so it plays once on load. */
+.cat__in{position:relative;display:block;width:100%;aspect-ratio:16/9;
+  overflow:hidden;
+  -webkit-clip-path:inset(0 0 100% 0);clip-path:inset(0 0 100% 0);
+  animation:catMask .9s var(--ease-slide) both;
+  animation-delay:calc(var(--i,0) * .09s)}
+@keyframes catMask{
+  to{-webkit-clip-path:inset(0 0 0 0);clip-path:inset(0 0 0 0)}
+}
+.cat__img{position:absolute;inset:0;background:var(--sand,#d5cfc6);
+  animation:catImg .9s var(--ease-slide) both;
+  animation-delay:calc(var(--i,0) * .09s)}
+@keyframes catImg{
+  from{transform:translateY(-30%)}
+  to{transform:translateY(0)}
+}
+/* drop a real <img> straight into .cat__img and it fills the holder */
+.cat__img img{width:100%;height:100%;object-fit:cover;display:block}
+
+.cat__name{margin-top:.5208vw;                      /* 10 / 1920 */
+  font-weight:300;letter-spacing:.03em;
+  font-size:clamp(13px,1.15vw,22px);color:var(--ink-page);
+  animation:catCap .6s var(--ease-slide) both;
+  animation-delay:calc(var(--i,0) * .09s + .25s)}
+@keyframes catCap{
+  from{opacity:0;transform:translateY(.4em)}
+  to{opacity:1;transform:none}
+}
+
+@media (max-width:900px){
+  .cat__grid{grid-template-columns:repeat(2,1fr);row-gap:6vw}
+}
+@media (max-width:560px){
+  .cat__grid{grid-template-columns:1fr;row-gap:8vw}
+}
+@media (prefers-reduced-motion:reduce){
+  .cat__in{-webkit-clip-path:none;clip-path:none;animation:none}
+  .cat__img,.cat__name{animation:none}
+}

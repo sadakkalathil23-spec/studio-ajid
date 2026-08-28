@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Projects — AJID</title>
+<link rel="icon" href="assets/brand/favicon.svg">
+<meta name="description" content="Studio Ajid is an interior design studio in Msheireb, Doha, working across residential, hospitality and objects.">
+<meta name="theme-color" content="#0c152a">
+<!-- Link previews: WhatsApp, iMessage and the rest read these. og:image wants
+     an absolute URL, so it is filled in once the site has its final domain. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Studio Ajid">
+<meta property="og:title" content="Studio Ajid">
+<meta property="og:description" content="Studio Ajid is an interior design studio in Msheireb, Doha, working across residential, hospitality and objects.">
+<meta property="og:image" content="assets/plate.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="apple-touch-icon" href="assets/brand/favicon.svg">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<!-- One page for Projects, Gallery and Objects — the set is chosen by ?c= and
+     written in by category.js. See that file to change the names. -->
+<body class="body--cat">
+
+<main class="pages">
+  <section class="pg pg--cat">
+
+    <!-- Home monogram and language switch on the same spine as the grid. -->
+    <header class="cat__bar">
+      <a class="cat__home" href="index.html" aria-label="AJID — home">
+        <svg class="cat__homemark" viewBox="370.88 396.13 338.27 287.74" role="presentation" aria-hidden="true">
+          <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+          <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+          <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+        </svg>
+      </a>
+      <a class="cat__lang js-lang" href="#" data-en="AR" data-ar-label="EN" aria-label="Switch to Arabic">AR</a>
+    </header>
+
+    <!-- heading and holders are written by category.js -->
+    <h1 class="cat__title" id="catTitle">Projects</h1>
+    <div class="cat__grid" id="catGrid"></div>
+
+    <div class="endmark">
+      <span class="endmark__line"></span>
+      <span class="endmark__logo">
+        <svg class="endmark__svg" viewBox="370.88 396.13 338.27 287.74" role="img" aria-label="AJID">
+        <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+        <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+        <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+        </svg>
+      </span>
+    </div>
+  </section>
+</main>
+
+<!-- category.js first: it writes the strings, carrying their Arabic with them,
+     so lang.js finds them already in the document when it sweeps it. -->
+<script src="js/category.js"></script>
+<script src="js/lang.js"></script>
+</body>
+</html>

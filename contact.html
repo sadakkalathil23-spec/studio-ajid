@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Start a residential, hospitality or object design project with Studio Ajid in Doha.">
+  <meta name="theme-color" content="#0c152a">
+  <!-- Link previews: WhatsApp, iMessage and the rest read these. og:image wants
+       an absolute URL, so it is filled in once the site has its final domain. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Studio Ajid">
+  <meta property="og:title" content="Contact — Studio Ajid">
+  <meta property="og:description" content="Start a residential, hospitality or object design project with Studio Ajid in Doha.">
+  <meta property="og:image" content="assets/plate.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="apple-touch-icon" href="assets/brand/favicon.svg">
+  <title data-ar="تواصل — استوديو عجيد">Contact — Studio Ajid</title>
+  <link rel="stylesheet" href="css/contact.css">
+</head>
+<body>
+  <header class="contact-head">
+    <a class="contact-brand" href="index.html" aria-label="Studio Ajid home">
+      <svg viewBox="370.88 396.13 338.27 287.74" aria-hidden="true">
+        <path d="M684.47,634.51c-13.63,0-24.68,11.05-24.68,24.68s11.05,24.68,24.68,24.68,24.68-11.05,24.68-24.68-11.05-24.68-24.68-24.68Z"/>
+        <polygon points="606.31 634.86 595.63 605.46 552.26 605.46 562.57 634.44 562.97 682.29 632.89 682.29 606.31 634.44 606.31 634.86"/>
+        <path d="M655.12,558.23h-76.63l-58.85-162.1h-66.21l.02.12h-8.62c1.56,1.34,4.3,3.88,7,7.58,14.58,19.98,9.92,49.39,2.22,74.11l-.15.43c-.02.07-.05.17-.07.25l-8.64,23.85c-4.26,11.77-8.52,23.54-12.77,35.32h28.47l33.43-92.59,40.82,113.05c-23.48.05-47.01.1-70.51.15v.05h-79.8c2.8,2.38,5.08,4.94,7.02,7.56,19.43,26.92,2.97,70.59-9.92,96.4l-10.83,19.53c-.07.12-.15.25-.22.37h54.35l.42-47.84,17.83-49.05c.1-.15.2-.27.32-.42,37.92.02,75.82-.49,113.71-.17,10.61.07,21.44.12,32.32.52,23.21.81,46.57,3.27,68.08,11.32.71.27,1.42.54,2.14.83l-4.91-39.25Z"/>
+      </svg>
+    </a>
+    <nav class="contact-nav" aria-label="Contact page navigation">
+      <a href="index.html" data-ar="الرئيسية">Home</a>
+      <button class="js-lang" type="button" data-en="AR" data-ar-label="EN" aria-label="Switch to Arabic">AR</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-intro">
+      <p class="contact-kicker" data-ar="استوديو عجيد — الدوحة">Studio Ajid — Doha</p>
+      <h1 data-ar="لنتحدث.">Let’s talk.</h1>
+      <p class="contact-deck" data-ar="أخبرنا عن مساحتك وطموحاتك والطريقة التي ترغب أن تعيش بها. سنعود إليك لمناقشة الخطوة التالية.">Tell us about your space, your ambitions, and how you want to live. We’ll be in touch to discuss the next step.</p>
+    </section>
+
+    <div class="contact-rule" aria-hidden="true"></div>
+
+    <section class="contact-grid">
+      <aside class="contact-details">
+        <div>
+          <h2 data-ar="الاستوديو">The Studio</h2>
+          <p data-ar-html="حي مشيرب للتصميم&lt;br&gt;الدوحة، قطر">Msheireb Design District<br>Doha, Qatar</p>
+          <p data-ar="بموعد مسبق فقط">By appointment only</p>
+          <a class="contact-email" href="mailto:hello@studioajid.com">hello@studioajid.com</a>
+        </div>
+        <a class="map-link" href="https://www.google.com/maps/place/Mushaireb+3,+Doha/@25.2853895,51.527176,17z/data=!3m1!4b1!4m6!3m5!1s0x3e45c539be669f0f:0xa66f1c0db579f08a!8m2!3d25.2864227!4d51.5274557!16s%2Fg%2F11bvv61qmr?entry=ttu" target="_blank" rel="noopener noreferrer"><span data-ar="عرض الموقع">View location</span><span aria-hidden="true">↗</span></a>
+      </aside>
+
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="field field--wide">
+          <label for="fullName"><span data-ar="الاسم الكامل">Full name</span><em>*</em></label>
+          <input id="fullName" name="fullName" type="text" autocomplete="name" maxlength="120" required>
+        </div>
+        <div class="field">
+          <label for="email"><span data-ar="البريد الإلكتروني">Email</span><em>*</em></label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="180" required>
+        </div>
+        <div class="field">
+          <label for="phone" data-ar="الهاتف / واتساب">Phone / WhatsApp</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" maxlength="60">
+        </div>
+        <div class="field">
+          <label for="projectType"><span data-ar="نوع المشروع">Project type</span><em>*</em></label>
+          <select id="projectType" name="projectType" required>
+            <option value="" disabled selected data-ar="اختر">Select</option>
+            <option value="Residential" data-ar="سكني">Residential</option>
+            <option value="Hospitality" data-ar="ضيافة">Hospitality</option>
+            <option value="Objects" data-ar="قطع">Objects</option>
+            <option value="Other" data-ar="أخرى">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="location" data-ar="موقع المشروع">Project location</label>
+          <input id="location" name="location" type="text" maxlength="160">
+        </div>
+        <div class="field">
+          <label for="budget" data-ar="الميزانية التقديرية">Estimated budget</label>
+          <select id="budget" name="budget">
+            <option value="" selected data-ar="أفضل مناقشتها">Prefer to discuss</option>
+            <option value="Under QAR 250,000">Under QAR 250,000</option>
+            <option value="QAR 250,000–500,000">QAR 250,000–500,000</option>
+            <option value="QAR 500,000–1,000,000">QAR 500,000–1,000,000</option>
+            <option value="Above QAR 1,000,000">Above QAR 1,000,000</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="preferredContact"><span data-ar="طريقة التواصل المفضلة">Preferred contact</span><em>*</em></label>
+          <select id="preferredContact" name="preferredContact" required>
+            <option value="" disabled selected data-ar="اختر">Select</option>
+            <option value="Email" data-ar="البريد الإلكتروني">Email</option>
+            <option value="Phone" data-ar="الهاتف">Phone</option>
+            <option value="WhatsApp" data-ar="واتساب">WhatsApp</option>
+          </select>
+        </div>
+        <div class="field field--wide">
+          <label for="message"><span data-ar="أخبرنا عن مشروعك">Tell us about your project</span><em>*</em></label>
+          <textarea id="message" name="message" rows="6" maxlength="2000" required></textarea>
+        </div>
+        <div class="field field--honeypot" aria-hidden="true">
+          <label for="companyWebsite">Company website</label>
+          <input id="companyWebsite" name="companyWebsite" type="text" tabindex="-1" autocomplete="off">
+        </div>
+        <label class="consent field--wide">
+          <input name="consent" type="checkbox" required>
+          <span data-ar="أوافق على أن يتواصل معي استوديو عجيد بخصوص هذا الطلب.">I agree to be contacted by Studio Ajid about this inquiry.</span>
+        </label>
+        <div class="form-actions field--wide">
+          <button class="submit-button" type="submit"><span data-ar="إرسال الطلب">Send inquiry</span><span aria-hidden="true">↗</span></button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="contact-footer"><span data-ar="استوديو عجيد — الدوحة، قطر">Studio Ajid — Doha, Qatar</span><span>© 2026</span></footer>
+  <script src="js/lang.js"></script>
+  <script src="js/contact.js"></script>
+</body>
+</html>
