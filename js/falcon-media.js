@@ -32,10 +32,12 @@
        'plate'   the painting alone, nothing moving — the fallback. */
     mode: 'animate',
 
+    /* The finished painting, falcon included. Only ever shown when there is no
+       video to play - it is the still fallback, nothing else. */
     plate: 'assets/plate.jpg',
-    /* Frame 0 of falcon-in: the same room, before the bird arrives. Held over
-       the plate until the entrance actually starts playing. */
-    preroll: 'assets/hero-first.webp',
+    /* Frame 0 of falcon-in: the same room with NO falcon. This is the bed the
+       clips sit on whenever they are running. */
+    room: 'assets/hero-first.webp',
     plateSize: [1920, 1080],
 
     /* 16:9, so a 16:9 screen fits exactly. Taller viewports crop the sides;
@@ -63,6 +65,18 @@
                       'object-fit:cover;object-position:var(--art-pos,' + A.anchor + ');' +
                       'transition:opacity .18s linear';
     return e;
+  }
+
+  /* Swap these layers with no transition, then hand the transition back on the
+     next frame so later changes still ease. */
+  function cut() {
+    var els = [].slice.call(arguments).filter(Boolean);
+    els.forEach(function (e) { e.style.transition = 'none'; });
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        els.forEach(function (e) { e.style.transition = 'opacity .18s linear'; });
+      });
+    });
   }
 
   function video(sources) {
@@ -104,24 +118,23 @@
     this.state = 'INIT';
     this.exitFrames = [];
 
+    /* THE BED UNDER EVERYTHING, and why it must be empty.
+       Every clip here is a full-frame render of this room with the falcon in
+       it, and each one is faded in over whatever is beneath. If what is beneath
+       is plate.jpg, the painted falcon is showing THROUGH every one of those
+       fades - so while the entrance clip flies a bird in from the right, a
+       second bird is sitting on the sofa underneath it. That is the doubling.
+       It also meant that on a slow connection the sitting bird was all you saw
+       until the clip buffered, and then he flew in and landed on himself.
+       So when there are clips to play, the bed is the room with NO falcon, and
+       the only falcon anywhere is the one in the clip. plate.jpg is kept for
+       the case where no video can play at all, which is the one time a painted
+       falcon is the right thing to look at. */
     this.plate = el('img');
-    this.plate.src = A.plate;
+    this.plate.src = ANIMATE ? A.room : A.plate;
     stage.appendChild(this.plate);
 
     if (!ANIMATE) return;
-
-    /* THE PRE-ROLL, and why it has to exist.
-       plate.jpg is the finished painting - the falcon is IN it, perched on the
-       sofa arm. It is the right thing to fall back to when there is no video,
-       but it is the wrong thing to look at while the entrance is still
-       buffering: you get the bird sitting there, and then a moment later the
-       same bird flies in from the right and lands on top of himself. On a
-       desktop that is one frame; on a phone it is several seconds of it.
-       So the first frame of the entrance clip - the room with no falcon at all
-       - covers the plate until the video is genuinely playing. */
-    this.pre = el('img');
-    this.pre.src = A.preroll;
-    stage.appendChild(this.pre);
 
     this.idle = video(A.idle);
     this.idle.loop = true;
@@ -175,10 +188,11 @@
       if (shown) return;
       shown = true;
       v.style.opacity = 1;
-      if (self.pre) self.pre.style.opacity = 0;
     }
     function giveUp() {
-      if (self.pre) self.pre.style.opacity = 0;   // uncover the painted plate
+      /* Nothing to play. The empty room is not a finished picture, so put the
+         painting back before handing over. */
+      self.plate.src = A.plate;
       self.toIdle();
     }
 
@@ -197,6 +211,11 @@
 
   MediaFalcon.prototype.toIdle = function () {
     this.set('IDLE');
+    /* Cut, do not fade. The outgoing and incoming clips hold the falcon in the
+       same pose at this moment, so there is nothing to soften - and a fade
+       would drop both layers to partial opacity and let the bed show through
+       between them. */
+    cut(this.idle, this.enter, this.canvas);
     this.idle.style.opacity = 1;
     if (this.enter) this.enter.style.opacity = 0;
     if (this.canvas) this.canvas.style.opacity = 0;
@@ -214,6 +233,7 @@
     }
     if (this.state !== 'EXIT') {
       this.set('EXIT');
+      cut(this.canvas, this.idle);
       this.canvas.style.opacity = 1;
       this.idle.style.opacity = 0;
       this.idle.pause();
