@@ -33,6 +33,9 @@
     mode: 'animate',
 
     plate: 'assets/plate.jpg',
+    /* Frame 0 of falcon-in: the same room, before the bird arrives. Held over
+       the plate until the entrance actually starts playing. */
+    preroll: 'assets/hero-first.webp',
     plateSize: [1920, 1080],
 
     /* 16:9, so a 16:9 screen fits exactly. Taller viewports crop the sides;
@@ -107,6 +110,19 @@
 
     if (!ANIMATE) return;
 
+    /* THE PRE-ROLL, and why it has to exist.
+       plate.jpg is the finished painting - the falcon is IN it, perched on the
+       sofa arm. It is the right thing to fall back to when there is no video,
+       but it is the wrong thing to look at while the entrance is still
+       buffering: you get the bird sitting there, and then a moment later the
+       same bird flies in from the right and lands on top of himself. On a
+       desktop that is one frame; on a phone it is several seconds of it.
+       So the first frame of the entrance clip - the room with no falcon at all
+       - covers the plate until the video is genuinely playing. */
+    this.pre = el('img');
+    this.pre.src = A.preroll;
+    stage.appendChild(this.pre);
+
     this.idle = video(A.idle);
     this.idle.loop = true;
     this.idle.style.opacity = 0;
@@ -148,10 +164,35 @@
        — an autoplay block, a missing file — go straight to idle rather than
        leaving the hero on a still frame. */
     this.set('ENTER');
-    this.enter.style.opacity = 1;
-    this.enter.addEventListener('ended', function () { self.toIdle(); });
-    var p = this.enter.play();
-    if (p && p.catch) p.catch(function () { self.toIdle(); });
+    var v = this.enter;
+
+    /* Reveal on 'playing', not on the call to play(). readyState and the
+       promise both resolve before the first frame is on screen; 'playing' is
+       the event that means pixels are moving. Revealing any earlier shows an
+       empty video box over the pre-roll. */
+    var shown = false;
+    function show() {
+      if (shown) return;
+      shown = true;
+      v.style.opacity = 1;
+      if (self.pre) self.pre.style.opacity = 0;
+    }
+    function giveUp() {
+      if (self.pre) self.pre.style.opacity = 0;   // uncover the painted plate
+      self.toIdle();
+    }
+
+    v.addEventListener('playing', show);
+    v.addEventListener('ended', function () { self.toIdle(); });
+
+    /* A phone on a poor connection can sit on this for a long time. Rather than
+       hold an empty room indefinitely, fall through to the painting and the
+       idle loop, which is the same thing the no-video path shows. */
+    var bail = setTimeout(function () { if (!shown) giveUp(); }, 8000);
+    v.addEventListener('playing', function () { clearTimeout(bail); });
+
+    var p = v.play();
+    if (p && p.catch) p.catch(function () { clearTimeout(bail); giveUp(); });
   };
 
   MediaFalcon.prototype.toIdle = function () {
