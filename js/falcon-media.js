@@ -67,18 +67,6 @@
     return e;
   }
 
-  /* Swap these layers with no transition, then hand the transition back on the
-     next frame so later changes still ease. */
-  function cut() {
-    var els = [].slice.call(arguments).filter(Boolean);
-    els.forEach(function (e) { e.style.transition = 'none'; });
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        els.forEach(function (e) { e.style.transition = 'opacity .18s linear'; });
-      });
-    });
-  }
-
   function video(sources) {
     var v = el('video');
     v.muted = true; v.playsInline = true; v.preload = 'auto';
@@ -210,12 +198,15 @@
   };
 
   MediaFalcon.prototype.toIdle = function () {
+    /* The original crossfade, restored. Two layers easing opacity linearly over
+       the same .18s always sum to exactly 1 - one rises by whatever the other
+       gives up - so the bed is never exposed between them and there is nothing
+       here that needed 'fixing'. The doubled falcon was never this handover; it
+       was the painted plate underneath, which is now an empty room. Cutting
+       instead of fading only removed the cover over the seam where the
+       entrance's last frame and the loop's first frame do not quite agree, and
+       put a visible jump on the landing. */
     this.set('IDLE');
-    /* Cut, do not fade. The outgoing and incoming clips hold the falcon in the
-       same pose at this moment, so there is nothing to soften - and a fade
-       would drop both layers to partial opacity and let the bed show through
-       between them. */
-    cut(this.idle, this.enter, this.canvas);
     this.idle.style.opacity = 1;
     if (this.enter) this.enter.style.opacity = 0;
     if (this.canvas) this.canvas.style.opacity = 0;
@@ -233,7 +224,6 @@
     }
     if (this.state !== 'EXIT') {
       this.set('EXIT');
-      cut(this.canvas, this.idle);
       this.canvas.style.opacity = 1;
       this.idle.style.opacity = 0;
       this.idle.pause();
